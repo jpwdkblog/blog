@@ -9,15 +9,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/</loc>
-        <lastmod>2020-08-11T02:27:24.884Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jpwdkblog.github.io/9999/12/31/Shutdown-with-Shell-Launcher/</loc>
-        <lastmod>2020-08-11T02:27:24.867Z</lastmod>
+        <lastmod>2020-08-11T02:32:58.222Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,7 +17,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/2020/01/12/past-blog/</loc>
-        <lastmod>2020-08-11T02:27:24.863Z</lastmod>
+        <lastmod>2020-08-11T02:32:58.216Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -33,7 +25,15 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/</loc>
-        <lastmod>2020-08-11T02:27:24.850Z</lastmod>
+        <lastmod>2020-08-11T02:32:58.202Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jpwdkblog.github.io/2020/08/11/Cancel-shutdown-with-Shell-Launcher/</loc>
+        <lastmod>2020-08-11T02:32:58.188Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -41,7 +41,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/</loc>
-        <lastmod>2020-08-11T02:27:24.847Z</lastmod>
+        <lastmod>2020-08-11T02:32:58.176Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
