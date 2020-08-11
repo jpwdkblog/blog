@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://jpwdkblog.github.io/"/>
-  <updated>2020-08-11T02:48:01.266Z</updated>
+  <updated>2020-08-11T13:35:49.246Z</updated>
   <id>https://jpwdkblog.github.io/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Windows PE 用ドライバの開発において参考になる公開ドキュメントについて</title>
+    <link href="https://jpwdkblog.github.io/2020/08/11/winpe-reference-websites/"/>
+    <id>https://jpwdkblog.github.io/2020/08/11/winpe-reference-websites/</id>
+    <published>2020-08-11T03:00:00.000Z</published>
+    <updated>2020-08-11T13:35:49.246Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Windows PE" scheme="https://jpwdkblog.github.io/categories/Windows-PE/"/>
+    
+    
+      <category term="参考情報" scheme="https://jpwdkblog.github.io/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Windows PE で IOCTL サンプルを動作させる方法について</title>
     <link href="https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/"/>
     <id>https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2020-08-11T02:48:01.266Z</updated>
+    <updated>2020-08-11T13:35:49.212Z</updated>
     
     <summary type="html">
     
@@ -42,7 +63,7 @@
     <link href="https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/"/>
     <id>https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2020-08-11T02:48:01.281Z</updated>
+    <updated>2020-08-11T13:35:49.230Z</updated>
     
     <summary type="html">
     
@@ -63,7 +84,7 @@
     <link href="https://jpwdkblog.github.io/2020/01/12/past-blog/"/>
     <id>https://jpwdkblog.github.io/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2020-08-11T02:48:01.276Z</updated>
+    <updated>2020-08-11T13:35:49.225Z</updated>
     
     <summary type="html">
     
@@ -84,7 +105,7 @@
     <link href="https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/"/>
     <id>https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2020-08-11T02:48:01.248Z</updated>
+    <updated>2020-08-11T13:35:49.198Z</updated>
     
     <summary type="html">
     

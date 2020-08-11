@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>https://jpwdkblog.github.io/2020/08/11/winpe-reference-websites/</loc>
+        <lastmod>2020-08-11T13:35:49.246Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/</loc>
-        <lastmod>2020-08-11T02:48:01.281Z</lastmod>
+        <lastmod>2020-08-11T13:35:49.230Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +25,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/2020/01/12/past-blog/</loc>
-        <lastmod>2020-08-11T02:48:01.276Z</lastmod>
+        <lastmod>2020-08-11T13:35:49.225Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,7 +33,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/</loc>
-        <lastmod>2020-08-11T02:48:01.266Z</lastmod>
+        <lastmod>2020-08-11T13:35:49.212Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -33,7 +41,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/</loc>
-        <lastmod>2020-08-11T02:48:01.248Z</lastmod>
+        <lastmod>2020-08-11T13:35:49.198Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
