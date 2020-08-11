@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://jpwdkblog.github.io/"/>
-  <updated>2020-08-11T02:32:58.188Z</updated>
+  <updated>2020-08-11T02:48:01.266Z</updated>
   <id>https://jpwdkblog.github.io/</id>
   
   <author>
@@ -17,32 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Shell Launcher でシャットダウンをキャンセルする方法</title>
-    <link href="https://jpwdkblog.github.io/2020/08/11/Cancel-shutdown-with-Shell-Launcher/"/>
-    <id>https://jpwdkblog.github.io/2020/08/11/Cancel-shutdown-with-Shell-Launcher/</id>
-    <published>2020-08-11T03:00:00.000Z</published>
-    <updated>2020-08-11T02:32:58.188Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Shell Launcher でシャットダウンをキャンセルする方法についてご紹介します。  &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Shell Launcher" scheme="https://jpwdkblog.github.io/categories/Shell-Launcher/"/>
-    
-    
-      <category term="シャットダウン" scheme="https://jpwdkblog.github.io/tags/%E3%82%B7%E3%83%A3%E3%83%83%E3%83%88%E3%83%80%E3%82%A6%E3%83%B3/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Windows PE で IOCTL サンプルを動作させる方法について</title>
     <link href="https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/"/>
     <id>https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2020-08-11T02:32:58.202Z</updated>
+    <updated>2020-08-11T02:48:01.266Z</updated>
     
     <summary type="html">
     
@@ -63,7 +42,7 @@
     <link href="https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/"/>
     <id>https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2020-08-11T02:32:58.222Z</updated>
+    <updated>2020-08-11T02:48:01.281Z</updated>
     
     <summary type="html">
     
@@ -84,7 +63,7 @@
     <link href="https://jpwdkblog.github.io/2020/01/12/past-blog/"/>
     <id>https://jpwdkblog.github.io/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2020-08-11T02:32:58.216Z</updated>
+    <updated>2020-08-11T02:48:01.276Z</updated>
     
     <summary type="html">
     
@@ -105,7 +84,7 @@
     <link href="https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/"/>
     <id>https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2020-08-11T02:32:58.176Z</updated>
+    <updated>2020-08-11T02:48:01.248Z</updated>
     
     <summary type="html">
     
