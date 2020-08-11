@@ -26,18 +26,18 @@
 <meta property="og:site_name" content="Japan WDK Support Blog">
 <meta property="og:description" content="Windows PE で IOCTL サンプルを動作させる方法についてご紹介します。">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://jpwdkblog.github.io/images/SolutionExplorer.png">
-<meta property="og:image" content="https://jpwdkblog.github.io/images/ConfigurationManager.png">
-<meta property="og:image" content="https://jpwdkblog.github.io/images/ioctlappPropatyPage.png">
-<meta property="og:image" content="https://jpwdkblog.github.io/images/CreateFile.png">
-<meta property="og:image" content="https://jpwdkblog.github.io/images/IoCreateDevice.png">
-<meta property="og:image" content="https://jpwdkblog.github.io/images/SIoctl_SioctlDeviceControl.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/IOCTL-sample/SolutionExplorer.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/IOCTL-sample/ConfigurationManager.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/IOCTL-sample/ioctlappPropatyPage.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/IOCTL-sample/CreateFile.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/IOCTL-sample/IoCreateDevice.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/IOCTL-sample/SIoctl_SioctlDeviceControl.png">
 <meta property="article:published_time" content="2020-07-29T08:30:00.000Z">
-<meta property="article:modified_time" content="2020-07-30T03:10:10.629Z">
+<meta property="article:modified_time" content="2020-08-11T02:27:24.850Z">
 <meta property="article:author" content="jpwdkblog">
 <meta property="article:tag" content="IOCTL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jpwdkblog.github.io/images/SolutionExplorer.png">
+<meta name="twitter:image" content="https://jpwdkblog.github.io/images/IOCTL-sample/SolutionExplorer.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -191,18 +191,18 @@
 <li><p>1-2. サンプルのビルド  </p>
 <p> このフォルダの ioctl.sln を、Visual Studio 2019 で開きます。Exe フォルダの下にはユーザーモードアプリケーションである ioctlapp のプロジェクト、Sys フォルダの下にはカーネルモードドライバである sioctl のプロジェクトがあることを確認できます。  </p>
  <div align="left">
- <img src="https://jpwdkblog.github.io/images/SolutionExplorer.png">
+ <img src="https://jpwdkblog.github.io/images/IOCTL-sample/SolutionExplorer.png">
  </div>
 
 <p> <strong>[ソリューション ‘ioctl’]</strong> を右クリックして <strong>[構成マネージャー]</strong> をクリックします。  </p>
  <div align="left">
- <img src="https://jpwdkblog.github.io/images/ConfigurationManager.png">
+ <img src="https://jpwdkblog.github.io/images/IOCTL-sample/ConfigurationManager.png">
  </div>
 
 <p> 今回は、[アクティブソリューション構成] を <strong>[Debug]</strong>、[アクティブ ソリューション プラットフォーム] を <strong>[x64]</strong> とします。  </p>
 <p> また、ioctlapp のプロパティを開き、[構成プロパティ]-[C/C++]-[コード生成] の [ランタイム ライブラリ] は <strong>[マルチスレッド デバッグ (/MTd)]</strong> にしておきます。  </p>
  <div align="left">
- <img src="https://jpwdkblog.github.io/images/ioctlappPropatyPage.png">
+ <img src="https://jpwdkblog.github.io/images/IOCTL-sample/ioctlappPropatyPage.png">
  </div>
 
 <p> [ソリューション ‘ioctl’] を右クリックして [ソリューションのリビルド] をクリックします。<br> これで、ioctlapp.exe, sioctl.sys ができます。  </p>
@@ -274,12 +274,12 @@
 
 <p>Testapp.c の 106 行目のコードは、確かに以下の通り CreateFile() を実行しています。  </p>
 <div align="left">
-<img src="https://jpwdkblog.github.io/images/CreateFile.png">
+<img src="https://jpwdkblog.github.io/images/IOCTL-sample/CreateFile.png">
 </div>
 
 <p>これでオープンできているのは、sioctl.sys で以下のように、IoCreateDevice() の第 3 引数 ntUnicodeString で \Device\SIOCTL という NT Device Name をセットしており、かつ、これに対するシンボリックリンクとして、Win32 Name である \DosDevices\IoctlTest を IoCreateSymbolicLink() で作成しているためです。  </p>
 <div align="left">
-<img src="https://jpwdkblog.github.io/images/IoCreateDevice.png">
+<img src="https://jpwdkblog.github.io/images/IOCTL-sample/IoCreateDevice.png">
 </div>
 
 <p>参考:<br><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/introduction-to-ms-dos-device-names" target="_blank" rel="noopener">Introduction to MS-DOS Device Names</a></p>
@@ -294,7 +294,7 @@
 <p>KMDF など WDF については、以下のドキュメントもご参考ください。<br><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/wdf/using-device-interfaces" target="_blank" rel="noopener">Using Device Interfaces</a></p>
 <p>(12) 最終的に仮想マシン上のコマンドプロンプトには、ioctlapp.exe の実行結果として、以下が表示されて、問題なく動作できていることがわかります。(各 IOCTL の動作を確認したい場合は、上記を参考に SIoctl!SioctlDeviceControl にブレークポイントを貼ってみてください。)  </p>
 <div align="left">
-<img src="https://jpwdkblog.github.io/images/SIoctl_SioctlDeviceControl.png">
+<img src="https://jpwdkblog.github.io/images/IOCTL-sample/SIoctl_SioctlDeviceControl.png">
 </div>
 <br>
 
@@ -313,6 +313,10 @@
 		
 	
 		<div class="art-item-footer">
+				
+					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/blog/9999/12/31/Shutdown-with-Shell-Launcher/" rel="prev"  title="テンプレート">
+						テンプレート 
+					</a></span>
 				
 				
 					<span class="art-item-right">next：<a href="/blog/2020/07/29/winpe-kernel-debug-via-network/" rel="next"  title="Windows PE でのネットワーク経由カーネル デバッガ接続方法について">
@@ -381,6 +385,8 @@
     
         <li><a class="flat-box" href="/blog/categories/Windows-PE/"><div class='name'>Windows PE</div><div class='badget'>2</div></a></li>
     
+        <li><a class="flat-box" href="/blog/categories/template/"><div class='name'>template</div><div class='badget'>1</div></a></li>
+    
     </ul>
     
 </div>
@@ -390,7 +396,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/blog/tags/IOCTL/" style="font-size: 14px; color: #808080">IOCTL</a> <a href="/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/" style="font-size: 14px; color: #808080">はじめに</a> <a href="/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/" style="font-size: 14px; color: #808080">カーネル デバッグ</a> <a href="/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/" style="font-size: 14px; color: #808080">過去ブログ</a>
+        <a href="/blog/tags/IOCTL/" style="font-size: 14px; color: #808080">IOCTL</a> <a href="/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/" style="font-size: 14px; color: #808080">はじめに</a> <a href="/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/" style="font-size: 14px; color: #808080">カーネル デバッグ</a> <a href="/blog/tags/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC/" style="font-size: 14px; color: #808080">テンプレ</a> <a href="/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/" style="font-size: 14px; color: #808080">過去ブログ</a>
     </div>
 </div>
 
