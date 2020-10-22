@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Japan WDK Support Blog</title>
-  <icon>https://jpwdkblog.github.io/icon.png</icon>
+  <icon>https://jpwdkblog.github.io/blog/icon.png</icon>
   
   <link href="/blog/atom.xml" rel="self"/>
   
-  <link href="https://jpwdkblog.github.io/"/>
-  <updated>2020-08-12T08:02:58.864Z</updated>
-  <id>https://jpwdkblog.github.io/</id>
+  <link href="https://jpwdkblog.github.io/blog/"/>
+  <updated>2020-10-22T10:15:41.401Z</updated>
+  <id>https://jpwdkblog.github.io/blog/</id>
   
   <author>
     <name>jpwdkblog</name>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Windows PE 用ドライバの開発において参考になる公開ドキュメントについて</title>
-    <link href="https://jpwdkblog.github.io/2020/08/11/winpe-reference-websites/"/>
-    <id>https://jpwdkblog.github.io/2020/08/11/winpe-reference-websites/</id>
+    <link href="https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/"/>
+    <id>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</id>
     <published>2020-08-11T03:00:00.000Z</published>
-    <updated>2020-08-12T08:02:58.864Z</updated>
+    <updated>2020-10-22T10:15:41.401Z</updated>
     
     <summary type="html">
     
@@ -30,19 +30,19 @@
     </summary>
     
     
-      <category term="Windows PE" scheme="https://jpwdkblog.github.io/categories/Windows-PE/"/>
+      <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
     
     
-      <category term="参考情報" scheme="https://jpwdkblog.github.io/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/"/>
+      <category term="参考情報" scheme="https://jpwdkblog.github.io/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/"/>
     
   </entry>
   
   <entry>
     <title>Windows PE で IOCTL サンプルを動作させる方法について</title>
-    <link href="https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/"/>
-    <id>https://jpwdkblog.github.io/2020/07/29/IOCTL-sample/</id>
+    <link href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/"/>
+    <id>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2020-08-12T08:02:58.841Z</updated>
+    <updated>2020-10-22T10:15:41.373Z</updated>
     
     <summary type="html">
     
@@ -51,19 +51,19 @@
     </summary>
     
     
-      <category term="Windows PE" scheme="https://jpwdkblog.github.io/categories/Windows-PE/"/>
+      <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
     
     
-      <category term="IOCTL" scheme="https://jpwdkblog.github.io/tags/IOCTL/"/>
+      <category term="IOCTL" scheme="https://jpwdkblog.github.io/blog/tags/IOCTL/"/>
     
   </entry>
   
   <entry>
     <title>Windows PE でのネットワーク経由カーネル デバッガ接続方法について</title>
-    <link href="https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/"/>
-    <id>https://jpwdkblog.github.io/2020/07/29/winpe-kernel-debug-via-network/</id>
+    <link href="https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/"/>
+    <id>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2020-08-12T08:02:58.859Z</updated>
+    <updated>2020-10-22T10:15:41.395Z</updated>
     
     <summary type="html">
     
@@ -72,19 +72,19 @@
     </summary>
     
     
-      <category term="Windows PE" scheme="https://jpwdkblog.github.io/categories/Windows-PE/"/>
+      <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
     
     
-      <category term="カーネル デバッグ" scheme="https://jpwdkblog.github.io/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/"/>
+      <category term="カーネル デバッグ" scheme="https://jpwdkblog.github.io/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/"/>
     
   </entry>
   
   <entry>
     <title>過去ブログについて</title>
-    <link href="https://jpwdkblog.github.io/2020/01/12/past-blog/"/>
-    <id>https://jpwdkblog.github.io/2020/01/12/past-blog/</id>
+    <link href="https://jpwdkblog.github.io/blog/2020/01/12/past-blog/"/>
+    <id>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2020-08-12T08:02:58.854Z</updated>
+    <updated>2020-10-22T10:15:41.389Z</updated>
     
     <summary type="html">
     
@@ -93,19 +93,19 @@
     </summary>
     
     
-      <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
+      <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
     
     
-      <category term="過去ブログ" scheme="https://jpwdkblog.github.io/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/"/>
+      <category term="過去ブログ" scheme="https://jpwdkblog.github.io/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/"/>
     
   </entry>
   
   <entry>
     <title>jpwdkblog について</title>
-    <link href="https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/"/>
-    <id>https://jpwdkblog.github.io/2020/01/01/aobut-jpwdkblog/</id>
+    <link href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/"/>
+    <id>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2020-08-12T08:02:58.830Z</updated>
+    <updated>2020-10-22T10:15:41.348Z</updated>
     
     <summary type="html">
     
@@ -121,10 +121,10 @@
     </summary>
     
     
-      <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
+      <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
     
     
-      <category term="はじめに" scheme="https://jpwdkblog.github.io/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/"/>
+      <category term="はじめに" scheme="https://jpwdkblog.github.io/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/"/>
     
   </entry>
   
