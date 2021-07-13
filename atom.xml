@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://jpwdkblog.github.io/blog/"/>
-  <updated>2021-05-18T13:00:11.606Z</updated>
+  <updated>2021-07-13T03:38:44.225Z</updated>
   <id>https://jpwdkblog.github.io/blog/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Windows 11 HLK の Create project のダイアログの &quot;Is Windows Driver Project?&quot; にチェックは入れないでください</title>
+    <link href="https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/"/>
+    <id>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</id>
+    <published>2021-07-12T15:00:00.000Z</published>
+    <updated>2021-07-13T03:38:44.225Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Windows PE で IOCTL サンプルを動作させる方法についてご紹介します。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Hardware Lab Kit" scheme="https://jpwdkblog.github.io/blog/categories/Hardware-Lab-Kit/"/>
+    
+    
+      <category term="Windows 11 HLK" scheme="https://jpwdkblog.github.io/blog/tags/Windows-11-HLK/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Windows PE 用ドライバの開発において参考になる公開ドキュメントについて</title>
     <link href="https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/"/>
     <id>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</id>
     <published>2020-08-11T03:00:00.000Z</published>
-    <updated>2021-05-18T13:00:11.606Z</updated>
+    <updated>2021-07-13T03:38:44.281Z</updated>
     
     <summary type="html">
     
@@ -42,7 +63,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2021-05-18T13:00:11.551Z</updated>
+    <updated>2021-07-13T03:38:44.245Z</updated>
     
     <summary type="html">
     
@@ -63,7 +84,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2021-05-18T13:00:11.599Z</updated>
+    <updated>2021-07-13T03:38:44.271Z</updated>
     
     <summary type="html">
     
@@ -84,7 +105,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/12/past-blog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2021-05-18T13:00:11.584Z</updated>
+    <updated>2021-07-13T03:38:44.263Z</updated>
     
     <summary type="html">
     
@@ -105,7 +126,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2021-05-18T13:00:11.526Z</updated>
+    <updated>2021-07-13T03:38:43.677Z</updated>
     
     <summary type="html">
     
