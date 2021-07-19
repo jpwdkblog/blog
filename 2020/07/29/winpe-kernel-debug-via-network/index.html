@@ -17,7 +17,7 @@
   <link rel="mask-icon" href="https://jpwdkblog.github.io/blog/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#00aba9">
   <meta name="theme-color" content="#ffffff">
-  <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog">
+  <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Windows PE でのネットワーク経由のカーネルデバッガ接続方法についてご紹介します。">
 <meta property="og:type" content="article">
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://jpwdkblog.github.io/images/winpe-kernel-debug-via-network/SecureBootSetting.png">
 <meta property="article:published_time" content="2020-07-29T08:00:00.000Z">
-<meta property="article:modified_time" content="2021-07-13T04:45:50.252Z">
+<meta property="article:modified_time" content="2021-07-19T06:32:15.230Z">
 <meta property="article:author" content="jpwdkblog">
 <meta property="article:tag" content="カーネル デバッグ">
 <meta name="twitter:card" content="summary">
@@ -46,8 +46,7 @@
     }
   </script>
   <meta name="google-site-verification" content="pWQqMJ7gh1mrMlGHKKrGh0r1IqaWrJc1dWnZowSZW-c" />
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
   <div id="loading-bar-wrapper">
@@ -147,33 +146,33 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前提"><span class="toc-number">1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#手順"><span class="toc-number">2.</span> <span class="toc-text">手順</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E9%A0%86"><span class="toc-number">2.</span> <span class="toc-text">手順</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>Windows PE でのネットワーク経由のカーネルデバッガ接続方法についてご紹介します。</p>
-<a id="more"></a>
+<span id="more"></span>
 <br>
 
 <hr>
 <p>Windows PE でのシリアルケーブル経由でのカーネルデバッガ接続方法は、以下のドキュメントが公開されております。この方法では、カーネルデバッガを起動する側であるホスト PC を選びません。  </p>
 <ul>
-<li><a href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-debug-apps#kernel-mode-debugging" target="_blank" rel="noopener">WinPE: Debug Apps - Kernel-mode debugging</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-debug-apps#kernel-mode-debugging">WinPE: Debug Apps - Kernel-mode debugging</a>  </li>
 </ul>
 <p>対しまして、今回ご紹介するネットワーク経由のカーネルデバッガ接続方法では、通常、以下のブログでご紹介したような kdnet.exe は、ターゲット PC の再起動が必要となるため使えず、予めホスト PC の IP アドレスを Windows PE 側の BCD に設定しておく必要があります。  </p>
 <ul>
-<li><a href="https://social.msdn.microsoft.com/Forums/ja-JP/db91ddff-f8ff-49d8-bef2-2a0c596414c2/hyperv-?forum=wdksupportteamja" target="_blank" rel="noopener">Hyper-V 仮想マシンへのネットワーク経由のカーネルデバッガ接続方法</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://social.msdn.microsoft.com/Forums/ja-JP/db91ddff-f8ff-49d8-bef2-2a0c596414c2/hyperv-?forum=wdksupportteamja">Hyper-V 仮想マシンへのネットワーク経由のカーネルデバッガ接続方法</a>  </li>
 </ul>
 <p>それでは、具体的な手順を紹介します。</p>
 <hr>
 <h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>今回は、Windows PE のイメージ作成を行う環境と、カーネルデバッガを起動するホスト PC は同じ PC とします。そして、その PC の Hyper-V 仮想マシン (UEFI を使うため第二世代、セキュアブートは OFF) を、ターゲット PC として、Windows PE の ISO を読ませるようにします。  </p>
 <p>ホスト PC には、以下のリンクから、Windows ADK for Windows 10 バージョン 1903 と、ADK 用の Windows PE アドオンをインストールしています。  </p>
 <ul>
-<li><p><a href="https://docs.microsoft.com/ja-jp/windows-hardware/get-started/adk-install" target="_blank" rel="noopener">Windows ADK のダウンロードとインストール</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-hardware/get-started/adk-install">Windows ADK のダウンロードとインストール</a></p>
 </li>
-<li><p><a href="https://go.microsoft.com/fwlink/?linkid=2086042" target="_blank" rel="noopener">Windows ADK for Windows 10、バージョン 1903 のダウンロード</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://go.microsoft.com/fwlink/?linkid=2086042">Windows ADK for Windows 10、バージョン 1903 のダウンロード</a></p>
 </li>
-<li><p><a href="https://go.microsoft.com/fwlink/?linkid=2087112" target="_blank" rel="noopener">ADK 用の Windows PE アドオンのダウンロード</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://go.microsoft.com/fwlink/?linkid=2087112">ADK 用の Windows PE アドオンのダウンロード</a></p>
 </li>
 </ul>
 <hr>
@@ -184,31 +183,31 @@
 <p>(3) 以下のコマンドを実行し、Windows PE 環境側のネットワーク接続でのカーネルデバッグ設定を行います。  </p>
 <ul>
 <li><p>(3-A) Windows PE 環境が UEFI の場合</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit &#x2F;store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD &#x2F;set &#123;default&#125; debug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit &#x2F;store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD &#x2F;set &#123;default&#125; bootdebug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit &#x2F;store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD &#x2F;dbgsettings NET HOSTIP:&lt;カーネルデバッガを起動するホスト PC の IP アドレス、xxx.xxx.xxx.xxx&gt; PORT:50005 key:5.5.5.5</span><br></pre></td></tr></table></figure>
-</li>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit /store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD /set &#123;default&#125; debug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit /store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD /set &#123;default&#125; bootdebug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit /store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD /dbgsettings NET HOSTIP:&lt;カーネルデバッガを起動するホスト PC の IP アドレス、xxx.xxx.xxx.xxx&gt; PORT:50005 key:5.5.5.5</span><br></pre></td></tr></table></figure></li>
 <li><p>(3-B) Windows PE 環境がレガシー BIOS の場合</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit &#x2F;store d:\WinPE_amd64\media\Boot\BCD &#x2F;set &#123;default&#125; debug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit &#x2F;store d:\WinPE_amd64\media\Boot\BCD &#x2F;set &#123;default&#125; bootdebug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit &#x2F;store d:\WinPE_amd64\media\Boot\BCD &#x2F;dbgsettings NET HOSTIP:&lt;カーネルデバッガを起動するホスト PC の IP アドレス、xxx.xxx.xxx.xxx&gt; PORT:50005 key:5.5.5.5</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit /store d:\WinPE_amd64\media\Boot\BCD /set &#123;default&#125; debug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit /store d:\WinPE_amd64\media\Boot\BCD /set &#123;default&#125; bootdebug on</span><br><span class="line"></span><br><span class="line">&gt; bcdedit /store d:\WinPE_amd64\media\Boot\BCD /dbgsettings NET HOSTIP:&lt;カーネルデバッガを起動するホスト PC の IP アドレス、xxx.xxx.xxx.xxx&gt; PORT:50005 key:5.5.5.5</span><br></pre></td></tr></table></figure>
 
 <p> <code>PORT の 50005 と key の 5.5.5.5 は例です。</code></p>
 </li>
 </ul>
 <p>(4) 以下のコマンドを実行し、設定した結果に問題ないか確認します。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit &#x2F;store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD &#x2F;dbgsettings</span><br><span class="line">   key                     5.5.5.5</span><br><span class="line">   debugtype               NET</span><br><span class="line">   hostip                  xxx.xxx.xxx.xxx</span><br><span class="line">   port                    50005</span><br><span class="line">   dhcp                    Yes</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; bcdedit /store d:\WinPE_amd64\media\EFI\Microsoft\Boot\BCD /dbgsettings</span><br><span class="line">   key                     5.5.5.5</span><br><span class="line">   debugtype               NET</span><br><span class="line">   hostip                  xxx.xxx.xxx.xxx</span><br><span class="line">   port                    50005</span><br><span class="line">   dhcp                    Yes</span><br></pre></td></tr></table></figure>
 
 <p>(5) 上記が完了したら、以下のコマンドで Windows PE の ISO ファイルを作成します。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; makewinpemedia &#x2F;iso d:\WinPE_amd64\winpe_x64_debug.iso</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; makewinpemedia /iso d:\WinPE_amd64\winpe_x64_debug.iso</span><br></pre></td></tr></table></figure>
 
 <p>(6) 上記の ISO ファイルで Hyper-V 仮想環境 (第二世代、セキュアブートなし) を作成します。  </p>
 <p>(上記の手順 (3) で、(3-A) で設定を行ったことが前提です。第一世代ですと、UEFI ではないため、(3-B) でないとカーネルデバッグ接続できません。また、セキュアブートは無効にする必要があります。)  </p>
-<p>使用する仮想スイッチは、上記「<a href="https://social.msdn.microsoft.com/Forums/ja-JP/db91ddff-f8ff-49d8-bef2-2a0c596414c2/hyperv?forum=wdksupportteamja" target="_blank" rel="noopener">Hyper-V 仮想マシンへのネットワーク経由のカーネルデバッガ接続方法</a>」の「1. ホストPC と仮想マシンをネットワーク接続します。」と同じものを使っています。</p>
+<p>使用する仮想スイッチは、上記「<a target="_blank" rel="noopener" href="https://social.msdn.microsoft.com/Forums/ja-JP/db91ddff-f8ff-49d8-bef2-2a0c596414c2/hyperv?forum=wdksupportteamja">Hyper-V 仮想マシンへのネットワーク経由のカーネルデバッガ接続方法</a>」の「1. ホストPC と仮想マシンをネットワーク接続します。」と同じものを使っています。</p>
 <div align="left">
 <img src="https://jpwdkblog.github.io/images/winpe-kernel-debug-via-network/SecureBootSetting.png">
 </div>
 
-<p>(7) カーネルデバッガ側は、以下のコマンドを実行することで Windows PE のターゲットにデバッガ接続し、ブレークインできます。<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; windbg.exe -k net:port&#x3D;50005,key&#x3D;5.5.5.5</span><br></pre></td></tr></table></figure><br><br></p>
+<p>(7) カーネルデバッガ側は、以下のコマンドを実行することで Windows PE のターゲットにデバッガ接続し、ブレークインできます。<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; windbg.exe -k net:port=50005,key=5.5.5.5</span><br></pre></td></tr></table></figure><br><br></p>
 <p>以上の内容がお役に立てば幸いです。  </p>
 <hr>
 <p><code>変更履歴</code><br><code>2020/07/29 created by Tsuda</code>  </p>
+<p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>
 
   	</div>
 	  
@@ -332,7 +331,7 @@
     
   </div>
   
-  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' target="_blank" rel="noopener" class="codename">MaterialFlow</a>.</div>
+  <div>Theme <a target="_blank" rel="noopener" href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a>.</div>
   
 </footer>
 

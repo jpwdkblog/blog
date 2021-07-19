@@ -17,7 +17,7 @@
   <link rel="mask-icon" href="https://jpwdkblog.github.io/blog/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#00aba9">
   <meta name="theme-color" content="#ffffff">
-  <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog">
+  <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。">
 <meta property="og:type" content="article">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2020-08-11T03:00:00.000Z">
-<meta property="article:modified_time" content="2021-07-13T04:45:50.269Z">
+<meta property="article:modified_time" content="2021-07-19T06:32:15.238Z">
 <meta property="article:author" content="jpwdkblog">
 <meta property="article:tag" content="参考情報">
 <meta name="twitter:card" content="summary">
@@ -44,8 +44,7 @@
     }
   </script>
   <meta name="google-site-verification" content="pWQqMJ7gh1mrMlGHKKrGh0r1IqaWrJc1dWnZowSZW-c" />
-<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
   <div id="loading-bar-wrapper">
@@ -145,12 +144,12 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ドライバのインストール方法"><span class="toc-number">1.</span> <span class="toc-text">ドライバのインストール方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ドライバのデバッグ方法"><span class="toc-number">2.</span> <span class="toc-text">ドライバのデバッグ方法</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">ドライバのインストール方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E3%81%AE%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">ドライバのデバッグ方法</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。</p>
-<a id="more"></a>
+<span id="more"></span>
 <br>
 
 <hr>
@@ -158,11 +157,11 @@
 <p>ドライバの実装そのものに Windows PE のために特別必要な実装はございませんので、インストール方法とデバッグ方法について以下の通りご案内いたします。  </p>
 <hr>
 <h2 id="ドライバのインストール方法"><a href="#ドライバのインストール方法" class="headerlink" title="ドライバのインストール方法"></a>ドライバのインストール方法</h2><ul>
-<li><p><a href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/add-and-remove-drivers-to-an-offline-windows-image" target="_blank" rel="noopener">Add and Remove Drivers to an offline Windows Image</a>  </p>
+<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/add-and-remove-drivers-to-an-offline-windows-image">Add and Remove Drivers to an offline Windows Image</a>  </p>
 </li>
-<li><p><a href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/add-device-drivers-to-windows-during-windows-setup" target="_blank" rel="noopener">Add Device Drivers to Windows During Windows Setup</a>  </p>
+<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/add-device-drivers-to-windows-during-windows-setup">Add Device Drivers to Windows During Windows Setup</a>  </p>
 </li>
-<li><p><a href="https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/winpe-mount-and-customize" target="_blank" rel="noopener">WinPE:マウントとカスタマイズ</a>  </p>
+<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/winpe-mount-and-customize">WinPE:マウントとカスタマイズ</a>  </p>
 <blockquote>
 <p>デバイス ドライバー (.inf ファイル) を追加する  </p>
 <ul>
@@ -170,33 +169,32 @@
 <p>Dism /Add-Driver /Image:”C:\WinPE_amd64\mount” /Driver:”C:\SampleDriver\driver.inf”</p>
 </li>
 </ul>
-<p>1 つのコマンドを使用してイメージに複数のドライバーを追加できますが、ほとんどの場合、各ドライバー パッケージを個別に追加すると問題のトラブルシューティングが簡単になります。<br>ドライバーの詳細については、<a href="https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdocs.microsoft.com%2Fja-jp%2Fwindows-hardware%2Fmanufacture%2Fdesktop%2Fwinpe-add-drivers&data=02%7C01%7Cdamochiz%40microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103220594&sdata=W98NawWBR4H6So2M70XucYl6WDWoZriC%2BB%2F%2FAoTvVPE%3D&reserved=0" target="_blank" rel="noopener">デバイス ドライバー (.inf ファイル) の追加</a> に関するページを参照してください。 使用可能なすべての <a href="https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdocs.microsoft.com%2Fja-jp%2Fwindows-hardware%2Fmanufacture%2Fdesktop%2Fdism-driver-servicing-command-line-options-s14&data=02%7C01%7Cdamochiz%40microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103230589&sdata=IERaF%2BuCfM9z3twCzIaBnQUlytFRCisIXD3K9JGl0Ks%3D&reserved=0" target="_blank" rel="noopener">DISM ドライバー サービス オプションを確認するには、DISM ドライバー サービスのコマンド ライン オプション</a> に関するページを参照してください。  </p>
+<p>1 つのコマンドを使用してイメージに複数のドライバーを追加できますが、ほとんどの場合、各ドライバー パッケージを個別に追加すると問題のトラブルシューティングが簡単になります。<br>ドライバーの詳細については、<a target="_blank" rel="noopener" href="https://nam06.safelinks.protection.outlook.com/?url=https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/winpe-add-drivers&data=02%7C01%7Cdamochiz@microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103220594&sdata=W98NawWBR4H6So2M70XucYl6WDWoZriC+B//AoTvVPE=&reserved=0">デバイス ドライバー (.inf ファイル) の追加</a> に関するページを参照してください。 使用可能なすべての <a target="_blank" rel="noopener" href="https://nam06.safelinks.protection.outlook.com/?url=https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/dism-driver-servicing-command-line-options-s14&data=02%7C01%7Cdamochiz@microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103230589&sdata=IERaF+uCfM9z3twCzIaBnQUlytFRCisIXD3K9JGl0Ks=&reserved=0">DISM ドライバー サービス オプションを確認するには、DISM ドライバー サービスのコマンド ライン オプション</a> に関するページを参照してください。  </p>
 </blockquote>
 </li>
-<li><p><a href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/drvload-command-line-options" target="_blank" rel="noopener">Drvload Command-Line Options</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/drvload-command-line-options">Drvload Command-Line Options</a></p>
 <blockquote>
-<p>The Drvload tool adds out-of-box drivers to a booted Windows Preinstallation Environment (Windows PE) image. It takes one or more driver .inf files as inputs. To add a driver to an offline Windows PE image, use the Deployment Image Servicing and Management (DISM) tool. For more information, see <a href="https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows-hardware%2Fmanufacture%2Fdesktop%2Fadd-and-remove-drivers-to-an-offline-windows-image&data=02%7C01%7Cdamochiz%40microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103240581&sdata=AGaBoJ9k1469JrFJ9wD5EbgFb2kc53HEsArtVbKE33E%3D&reserved=0" target="_blank" rel="noopener">Add and Remove Drivers to an Offline Windows Image</a>.</p>
-<p>If the driver .inf file requires a reboot, Windows PE will ignore the request. If the driver .sys file requires a reboot, then the driver cannot be added with Drvload. For more information, see <a href="https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows-hardware%2Fmanufacture%2Fdesktop%2Fdevice-drivers-and-deployment-overview&data=02%7C01%7Cdamochiz%40microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103250576&sdata=HE9JMSfjmwXzyS83feNJD46D1drGkQz7xCxIVb3%2FfD0%3D&reserved=0" target="_blank" rel="noopener">Device Drivers and Deployment Overview</a> and <a href="https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows-hardware%2Fmanufacture%2Fdesktop%2Fdism-driver-servicing-command-line-options-s14&data=02%7C01%7Cdamochiz%40microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103250576&sdata=TQCM7WVJBJa4vHDM%2F2llwYKB6Xc0P2ElnmVZN1x7yQo%3D&reserved=0" target="_blank" rel="noopener">DISM Driver Servicing Command-Line Options</a>.</p>
+<p>The Drvload tool adds out-of-box drivers to a booted Windows Preinstallation Environment (Windows PE) image. It takes one or more driver .inf files as inputs. To add a driver to an offline Windows PE image, use the Deployment Image Servicing and Management (DISM) tool. For more information, see <a target="_blank" rel="noopener" href="https://nam06.safelinks.protection.outlook.com/?url=https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/add-and-remove-drivers-to-an-offline-windows-image&data=02%7C01%7Cdamochiz@microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103240581&sdata=AGaBoJ9k1469JrFJ9wD5EbgFb2kc53HEsArtVbKE33E=&reserved=0">Add and Remove Drivers to an Offline Windows Image</a>.</p>
+<p>If the driver .inf file requires a reboot, Windows PE will ignore the request. If the driver .sys file requires a reboot, then the driver cannot be added with Drvload. For more information, see <a target="_blank" rel="noopener" href="https://nam06.safelinks.protection.outlook.com/?url=https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/device-drivers-and-deployment-overview&data=02%7C01%7Cdamochiz@microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103250576&sdata=HE9JMSfjmwXzyS83feNJD46D1drGkQz7xCxIVb3/fD0=&reserved=0">Device Drivers and Deployment Overview</a> and <a target="_blank" rel="noopener" href="https://nam06.safelinks.protection.outlook.com/?url=https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/dism-driver-servicing-command-line-options-s14&data=02%7C01%7Cdamochiz@microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103250576&sdata=TQCM7WVJBJa4vHDM/2llwYKB6Xc0P2ElnmVZN1x7yQo=&reserved=0">DISM Driver Servicing Command-Line Options</a>.</p>
 <p>Drivers added using the Drvload tool are marked as the preferred driver for that device. If you add an updated driver during Windows Setup, the driver that you added with Drvload takes precedence.</p>
 </blockquote>
 </li>
 </ul>
 <hr>
 <h2 id="ドライバのデバッグ方法"><a href="#ドライバのデバッグ方法" class="headerlink" title="ドライバのデバッグ方法"></a>ドライバのデバッグ方法</h2><ul>
-<li><p><a href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-debug-apps#kernel-mode-debugging" target="_blank" rel="noopener">WinPE: Debug Apps - Kernel-mode debugging</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-debug-apps#kernel-mode-debugging">WinPE: Debug Apps - Kernel-mode debugging</a></p>
 <p> 上記に関連して、以下のブログも作成しておりますので、ご参考になりましたら幸いです。</p>
 </li>
 <li><p><a href="https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/">Windows PE でのネットワーク経由カーネル デバッガ接続方法について</a></p>
 </li>
 <li><p><a href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/">Windows PE で IOCTL サンプルを動作させる方法について
 </a>  </p>
-<br>  
-
-</li>
+<br>  </li>
 </ul>
 <p>以上の内容がお役に立てば幸いです。</p>
 <hr>
 <p><code>変更履歴</code><br><code>2020/08/11 created by Tsuda</code>  </p>
+<p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>
 
   	</div>
 	  
@@ -320,7 +318,7 @@
     
   </div>
   
-  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' target="_blank" rel="noopener" class="codename">MaterialFlow</a>.</div>
+  <div>Theme <a target="_blank" rel="noopener" href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a>.</div>
   
 </footer>
 

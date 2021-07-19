@@ -3,10 +3,10 @@
   <title>Japan WDK Support Blog</title>
   <icon>https://jpwdkblog.github.io/blog/icon.png</icon>
   
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="https://jpwdkblog.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://jpwdkblog.github.io/blog/"/>
-  <updated>2021-07-13T04:45:50.230Z</updated>
+  <updated>2021-07-19T06:32:15.198Z</updated>
   <id>https://jpwdkblog.github.io/blog/</id>
   
   <author>
@@ -21,19 +21,17 @@
     <link href="https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/"/>
     <id>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</id>
     <published>2021-07-12T15:00:00.000Z</published>
-    <updated>2021-07-13T04:45:50.230Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Windows 11 HLK の Create project を実行する際の、”Is Windows Driver Project?” チェックボックスについて注意点を紹介いたします。  &lt;/p&gt;
-    
-    </summary>
+    <updated>2021-07-19T06:32:15.198Z</updated>
     
     
-      <category term="Hardware Lab Kit" scheme="https://jpwdkblog.github.io/blog/categories/Hardware-Lab-Kit/"/>
+    <summary type="html">&lt;p&gt;Windows 11 HLK の Create project を実行する際の、”Is Windows Driver Project?” チェックボックスについて注意点を紹介いたします。  &lt;/p&gt;</summary>
     
     
-      <category term="Windows 11 HLK" scheme="https://jpwdkblog.github.io/blog/tags/Windows-11-HLK/"/>
+    
+    <category term="Hardware Lab Kit" scheme="https://jpwdkblog.github.io/blog/categories/Hardware-Lab-Kit/"/>
+    
+    
+    <category term="Windows 11 HLK" scheme="https://jpwdkblog.github.io/blog/tags/Windows-11-HLK/"/>
     
   </entry>
   
@@ -42,19 +40,17 @@
     <link href="https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/"/>
     <id>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</id>
     <published>2020-08-11T03:00:00.000Z</published>
-    <updated>2021-07-13T04:45:50.269Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。&lt;/p&gt;
-    
-    </summary>
+    <updated>2021-07-19T06:32:15.238Z</updated>
     
     
-      <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
+    <summary type="html">&lt;p&gt;Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。&lt;/p&gt;</summary>
     
     
-      <category term="参考情報" scheme="https://jpwdkblog.github.io/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/"/>
+    
+    <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
+    
+    
+    <category term="参考情報" scheme="https://jpwdkblog.github.io/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/"/>
     
   </entry>
   
@@ -63,19 +59,17 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2021-07-13T04:45:50.247Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Windows PE で IOCTL サンプルを動作させる方法についてご紹介します。&lt;/p&gt;
-    
-    </summary>
+    <updated>2021-07-19T06:32:15.213Z</updated>
     
     
-      <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
+    <summary type="html">&lt;p&gt;Windows PE で IOCTL サンプルを動作させる方法についてご紹介します。&lt;/p&gt;</summary>
     
     
-      <category term="IOCTL" scheme="https://jpwdkblog.github.io/blog/tags/IOCTL/"/>
+    
+    <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
+    
+    
+    <category term="IOCTL" scheme="https://jpwdkblog.github.io/blog/tags/IOCTL/"/>
     
   </entry>
   
@@ -84,19 +78,17 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2021-07-13T04:45:50.252Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Windows PE でのネットワーク経由のカーネルデバッガ接続方法についてご紹介します。&lt;/p&gt;
-    
-    </summary>
+    <updated>2021-07-19T06:32:15.230Z</updated>
     
     
-      <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
+    <summary type="html">&lt;p&gt;Windows PE でのネットワーク経由のカーネルデバッガ接続方法についてご紹介します。&lt;/p&gt;</summary>
     
     
-      <category term="カーネル デバッグ" scheme="https://jpwdkblog.github.io/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/"/>
+    
+    <category term="Windows PE" scheme="https://jpwdkblog.github.io/blog/categories/Windows-PE/"/>
+    
+    
+    <category term="カーネル デバッグ" scheme="https://jpwdkblog.github.io/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/"/>
     
   </entry>
   
@@ -105,19 +97,17 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/12/past-blog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2021-07-13T04:45:50.252Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;過去のブログ情報を紹介いたします。&lt;/p&gt;
-    
-    </summary>
+    <updated>2021-07-19T06:32:15.226Z</updated>
     
     
-      <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
+    <summary type="html">&lt;p&gt;過去のブログ情報を紹介いたします。&lt;/p&gt;</summary>
     
     
-      <category term="過去ブログ" scheme="https://jpwdkblog.github.io/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/"/>
+    
+    <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
+    
+    
+    <category term="過去ブログ" scheme="https://jpwdkblog.github.io/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/"/>
     
   </entry>
   
@@ -126,26 +116,24 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2021-07-13T04:45:50.214Z</updated>
+    <updated>2021-07-19T06:32:15.193Z</updated>
     
-    <summary type="html">
     
       
       
         
         
-          &lt;p&gt;日本マイクロソフトの Windows Driver Kit に関するサポート情報のブログです。&lt;/p&gt;
-&lt;h3 id=&quot;公開日&quot;&gt;&lt;a href=&quot;#公開日&quot; class=&quot;headerlink&quot; title=&quot;公開日&quot;&gt;&lt;/a&gt;公開日&lt;/h3&gt;&lt;p&gt;2020 年 1 月
+    <summary type="html">&lt;p&gt;日本マイクロソフトの Windows Driver Kit に関するサポート情報のブログです。&lt;/p&gt;
+&lt;h3 id=&quot;公開日&quot;&gt;&lt;a href=&quot;#公開日&quot; class=&quot;headerlink&quot; title=&quot;公開日&quot;&gt;&lt;/a&gt;公開日&lt;/h3&gt;&lt;p&gt;2020 年 1 月</summary>
         
       
     
-    </summary>
     
     
-      <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
+    <category term="Windows Driver Kit 全般" scheme="https://jpwdkblog.github.io/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"/>
     
     
-      <category term="はじめに" scheme="https://jpwdkblog.github.io/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/"/>
+    <category term="はじめに" scheme="https://jpwdkblog.github.io/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/"/>
     
   </entry>
   
