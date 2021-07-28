@@ -4,34 +4,9 @@
   
     
     <entry>
-      <title>Windows 11 HLK の Create project のダイアログの &quot;Is Windows Driver Project?&quot; にチェックは入れないでください</title>
+      <title>Windows 11 及び Server 2022 用 HLK の Create project のダイアログの &quot;Is Windows Driver Project?&quot; にチェックは入れないでください</title>
       <link href="/blog/2021/07/13/HLK-create-project/"/>
       <url>/blog/2021/07/13/HLK-create-project/</url>
-      
-        <content type="html"><![CDATA[<p>Windows 11 HLK の Create project を実行する際の、”Is Windows Driver Project?” チェックボックスについて注意点を紹介いたします。  </p><span id="more"></span><br><hr><p>Windows 11 HLK では、「<a href="https://docs.microsoft.com/ja-jp/windows-hardware/test/hlk/getstarted/step-4-create-a-project">手順 4:プロジェクトの作成</a>」の際に、以下のような “Is Windows Driver Project?” というチェックボックスがある “Create project” のダイアログが表示されます。  </p><p> <img src="https://jpwdkblog.github.io/images/HLK-create-project/CreateProject.png" width=400px><br clear="left">  </p><p>誠に恐れ入りますが、Windows 11 用の認定や署名の取得のために、Hardware Dev Center Dashboard に提出される場合には、このチェックボックスに <u><strong>チェックは入れない</strong></u> ようにお願いいたします。  </p><p>このチェックボックスは、本来 Dashboard へのご提出用を目的としておらず、弊社開発部門等と協業されているお客様が、その担当部門より指示があった場合にご利用されるものとなっており、将来削除予定となっております。  </p><p>もしこれをチェックしてプロジェクトを作成して提出された場合、Hardware Dev Center Dashboard 側ではそれを処理できず、ご提出は Pass せず止まったまま、もしくは、Dashboard 側の担当部門にて Cancel の取り扱いとなります。<br>この場合、Windows 11 HLK のご提出をご要望される場合は、以下のいずれかの対処策があります。  </p><ul><li><p>(a) 上記プロジェクトの作成をチェックボックスにチェックを入れずにやり直し、<a href="https://docs.microsoft.com/en-us/windows-hardware/test/hlk/testref/bbcc1b46-d0bf-46c8-85b4-2cd62df34a20">DF - InfVerif INF Verification (bbcc1b46-d0bf-46c8-85b4-2cd62df34a20)</a> のみ実施し、上記の Pass しなかったパッケージを、HLK Studio の Package タブの [Add Supplemental Folder] ボタンで Supplemental folder に追加した、提出パッケージを作成します。  </p></li><li><p>(b)    万が一、何らかの理由で (a) の方法がうまくいかない場合は、上記プロジェクトの作成からチェックを入れずにやり直しし、テストを全て再度ご実施いただきます。  </p></li></ul><p>上記の問題を弊社は認識しておりますため、改善に向けたアクションを進めております。ただ、誠に恐れ入りますが、現時点では、上記の回避策があるため、Windows 11 HLK そのものの修正は行われず、次のバージョンのリリースに修正が含まれる予定です。そのため、誠にお手数ではございますが、Windows 11 HLK につきましては、上記の対処でのご対応をお願い申し上げます。  </p><hr><p><code>変更履歴</code><br><code>2021/07/13 created by Tsuda</code></p><p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Hardware Lab Kit </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Windows 11 HLK </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Windows 11 及び Server 2022 用 HLK の Create project のダイアログの &quot;Is Windows Driver Project?&quot; にチェックは入れないでください</title>
-      <link href="/blog/2021/07/13/HLK-create-project-damochiz02/"/>
-      <url>/blog/2021/07/13/HLK-create-project-damochiz02/</url>
       
         <content type="html"><![CDATA[<p>Windows 11 及び Server 2022 用 HLK の Create project を実行する際の、”Is Windows Driver Project?” チェックボックスについて注意点を紹介いたします。  </p><span id="more"></span><br><hr><p>Windows 11 HLK 及び Windows HLK for Windows Server 2022 では、「<a href="https://docs.microsoft.com/ja-jp/windows-hardware/test/hlk/getstarted/step-4-create-a-project">手順 4:プロジェクトの作成</a>」の際に、以下のような “Is Windows Driver Project?” というチェックボックスがある “Create project” のダイアログが表示されます。  </p><p> <img src="https://jpwdkblog.github.io/images/HLK-create-project/CreateProject.png" width=400px><br clear="left">  </p><p>誠に恐れ入りますが、Windows 11 や Windows Server 2022 用の認定や署名の取得のために、Hardware Dev Center Dashboard に提出される場合には、このチェックボックスに <u><strong>チェックは入れない</strong></u> ようにお願いいたします。  </p><p>このチェックボックスは、本来 Dashboard へのご提出用を目的としておらず、弊社開発部門等と協業されているお客様が、その担当部門より指示があった場合にご利用されるものとなっており、将来削除予定となっております。  </p><p>もしこれをチェックしてプロジェクトを作成して提出された場合、Hardware Dev Center Dashboard 側ではそれを処理できず、ご提出は Pass せず止まったまま、もしくは、Dashboard 側の担当部門にて Cancel の取り扱いとなります。<br>この場合、Windows 11 HLK 及び Windows HLK for Windows Server 2022 でのご提出をご要望される場合は、以下のいずれかの対処策があります。  </p><p>  (a) 上記プロジェクトの作成をチェックボックスにチェックを入れずにやり直し、<a href="https://docs.microsoft.com/en-us/windows-hardware/test/hlk/testref/bbcc1b46-d0bf-46c8-85b4-2cd62df34a20">DF - InfVerif INF Verification (bbcc1b46-d0bf-46c8-85b4-2cd62df34a20)</a> のみ実施します。そして、HLK Studio の Package タブの [Add Supplemental Folder] ボタンでSupplemental folder に以下を追加した提出パッケージを作成します。  </p><ul><li>上記の提出が Pass しなかった HLKX ファイル</li><li>Waiver ID Number に 84015 (という Manual Errata ID) をご記載いただいた、<a href="http://download.microsoft.com/download/4/C/3/4C34C72F-FD65-41C9-B89A-A0858A2C3562/windows-hardware-dashboard-submission-readme-v2.2.docx">WHQL Submission Readme フォーム</a>  </li></ul><p>  (b)    万が一、何らかの理由で (a) の方法がうまくいかない場合は、上記プロジェクトの作成からチェックを入れずにやり直し、テストを全て再度ご実施いただきます。  </p><p>上記の問題を弊社は認識しておりますため、改善に向けたアクションを進めております。ただ、誠に恐れ入りますが、現時点では、上記の回避策があるため、Windows 11 HLK 及び Windows HLK for Windows Server 2022 そのものの修正は行われず、次のバージョンのリリースに修正が含まれる予定です。そのため、誠にお手数ではございますが、Windows 11 HLK 及び Windows HLK for Windows Server 2022 につきましては、上記の対処でのご対応をお願い申し上げます。  </p><ul><li>参考 URL<br><a href="https://techcommunity.microsoft.com/t5/windows-hardware-certification/windows-11-amp-server-2022-hlk-kit-guidance-for-creating-new/ba-p/2567481">Windows 11 &amp; Server 2022 HLK kit guidance for creating new submission packages for Widows 11, v21H2</a>  </li></ul><hr><p><code>変更履歴</code><br><code>2021/07/13 created by Tsuda</code><br><code>2021/07/20 modified by Tsuda</code>  </p><p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>]]></content>
       
