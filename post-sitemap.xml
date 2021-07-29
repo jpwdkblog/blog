@@ -8,40 +8,8 @@
     </url>
 
     <url>
-        <loc>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project-damochiz02/</loc>
-        <lastmod>2021-07-21T01:57:01.062Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</loc>
-        <lastmod>2021-07-20T00:44:52.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</loc>
-        <lastmod>2021-07-20T00:44:52.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</loc>
-        <lastmod>2021-07-20T00:44:52.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</loc>
-        <lastmod>2021-07-20T00:44:52.000Z</lastmod>
+        <loc>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</loc>
+        <lastmod>2021-07-29T00:55:45.959Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -49,15 +17,39 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</loc>
-        <lastmod>2021-07-20T00:44:52.000Z</lastmod>
+        <lastmod>2021-07-29T00:55:45.955Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</loc>
-        <lastmod>2021-07-20T00:44:52.000Z</lastmod>
+        <loc>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</loc>
+        <lastmod>2021-07-29T00:55:45.951Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</loc>
+        <lastmod>2021-07-29T00:55:45.939Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</loc>
+        <lastmod>2021-07-29T00:55:45.925Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</loc>
+        <lastmod>2021-07-29T00:55:45.921Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
