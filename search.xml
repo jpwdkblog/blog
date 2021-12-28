@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Windows 11 における USB スキャナーで発生する問題について</title>
+      <link href="/blog/2021/12/28/win11-usbscan-issue/"/>
+      <url>/blog/2021/12/28/win11-usbscan-issue/</url>
+      
+        <content type="html"><![CDATA[<p>この記事では、Windows 11 に USB スキャナーを接続した問題について説明します。</p><span id="more"></span><br><hr><h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>現在、Windows 11 において、次のような操作を行うと USB スキャナーのドライバーのロードに失敗して、スキャナーが正しく動作しない問題があることを確認しています。</p><p>(1) Windows が起動している状態で USB スキャナーを接続します。</p><p>(2) スキャナーと PC が接続されている USB ケーブルを抜く、またはスキャナーの電源をオフにします。</p><p>(3) Windows を再起動します。</p><p>(4) Windows 起動後、再度 USB スキャナーを接続、あるいは電源をオンにします。</p><p>結果：USB スキャナーを使用するアプリケーションを起動し、スキャナーの利用を試みると、スキャナー ドライバーの有無に関わらず [このデバイスを使用するには WIA ドライバーが必要です。] というエラーが表示されます。</p><br><hr><h3 id="回避方法"><a href="#回避方法" class="headerlink" title="回避方法"></a>回避方法</h3><p>お手数おかけいたしますが、この問題に遭遇した場合、次の手順に沿って Windows Imaging Acquisition (WIA) サービスを再起動して、問題を解消してください。</p><p>(1) Ctrl + Shift + Esc キーを押下して、タスク マネージャーを起動します。</p><p>(2) ウィンドウ下部にある [詳細] をクリックして、詳細表示に切り替えます。<br>   <div align="left"><br>   <img src="./images/win11-usbscan-issue/taskman1.png"><br>   </div></p><p>(3) [サービス] タブに移動して、StiSvc を見つけます。<br>   <div align="left"><br>   <img src="./images/win11-usbscan-issue/taskman2.png"><br>   </div></p><p>(4) StiSvc を右クリックして [再起動] を選び、サービスの再起動を行い、問題を解消します。<br>   <div align="left"><br>   <img src="./images/win11-usbscan-issue/taskman3.png"><br>   </div></p><br><hr><h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>この現象については、Windows 11 の不具合であると認識しており、現在調査中となります。</p><br><hr><h3 id="開発者向け詳細情報"><a href="#開発者向け詳細情報" class="headerlink" title="開発者向け詳細情報"></a>開発者向け詳細情報</h3><p>この現象による問題かどうかについては c:\windows\debug\WIA\wiatrace.log を参照することで、判断することができます。<br>Windows 11 において、ドライバーをインストールしているにもかかわらず、概要に記載のようなエラーが表示される場合、WIA Trace Log に次のようなログが出力されていないかご確認ください。USDWrapper::LoadDriver のエラーコードとして <code>hr = 0x80070057</code> が記録されている場合、この現象に該当していると考えられます。   </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WIA: xxxx.yyy zzz 0 0 [wiaservc.dll] ERROR: USDWrapper::LoadDriver, We encountered an error attempting to load driver for (YourScannerName), error (0x80070057)</span><br><span class="line">WIA: xxxx.yyy zzz 0 0 [wiaservc.dll] ERROR: DeviceListManager::ProcessDeviceArrival, The driver for device (YourScannerName) failed to load (hr = 0x80070057)</span><br></pre></td></tr></table></figure><hr><p><code>変更履歴</code><br><code>2021/12/31 created by riwaida</code></p><p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> printscan </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows 11 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Windows 11 及び Server 2022 用 HLK の Create project のダイアログの &quot;Is Windows Driver Project?&quot; にチェックは入れないでください</title>
       <link href="/blog/2021/07/13/HLK-create-project/"/>
       <url>/blog/2021/07/13/HLK-create-project/</url>
