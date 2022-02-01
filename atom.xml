@@ -6,7 +6,7 @@
   <link href="https://jpwdkblog.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://jpwdkblog.github.io/blog/"/>
-  <updated>2022-02-01T01:39:37.587Z</updated>
+  <updated>2022-02-01T01:59:39.441Z</updated>
   <id>https://jpwdkblog.github.io/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/</id>
     <published>2021-12-28T00:00:00.000Z</published>
-    <updated>2022-02-01T01:39:37.587Z</updated>
+    <updated>2022-02-01T01:59:39.441Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Windows 11 に USB スキャナーを接続した問題について説明します。&lt;/p&gt;</summary>
@@ -40,7 +40,7 @@
     <link href="https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/"/>
     <id>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</id>
     <published>2021-07-12T15:00:00.000Z</published>
-    <updated>2022-02-01T01:39:37.556Z</updated>
+    <updated>2022-02-01T01:59:39.385Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows 11 及び Server 2022 用 HLK の Create project を実行する際の、”Is Windows Driver Project?” チェックボックスについて注意点を紹介いたします。  &lt;/p&gt;</summary>
@@ -59,7 +59,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/"/>
     <id>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</id>
     <published>2020-08-11T03:00:00.000Z</published>
-    <updated>2022-02-01T01:39:37.602Z</updated>
+    <updated>2022-02-01T01:59:39.463Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。&lt;/p&gt;</summary>
@@ -78,7 +78,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2022-02-01T01:39:37.571Z</updated>
+    <updated>2022-02-01T01:59:39.400Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE で IOCTL サンプルを動作させる方法についてご紹介します。&lt;/p&gt;</summary>
@@ -97,7 +97,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2022-02-01T01:39:37.602Z</updated>
+    <updated>2022-02-01T01:59:39.447Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE でのネットワーク経由のカーネルデバッガ接続方法についてご紹介します。&lt;/p&gt;</summary>
@@ -116,7 +116,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/12/past-blog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2022-02-01T01:39:37.587Z</updated>
+    <updated>2022-02-01T01:59:39.425Z</updated>
     
     
     <summary type="html">&lt;p&gt;過去のブログ情報を紹介いたします。&lt;/p&gt;</summary>
@@ -135,7 +135,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2022-02-01T01:39:37.540Z</updated>
+    <updated>2022-02-01T01:59:39.370Z</updated>
     
     
       
