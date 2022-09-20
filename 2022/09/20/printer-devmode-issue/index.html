@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>プリンタ― ドライバ―のアップデートを行った際に DEVMODE 情報が更新されない | Japan WDK Support Blog</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="https://jpwdkblog.github.io/blog/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://jpwdkblog.github.io/blog/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jpwdkblog.github.io/blog/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jpwdkblog.github.io/blog/favicon/favicon-16x16.png">
+  <link rel="manifest" href="https://jpwdkblog.github.io/blog/favicon/site.webmanifest">
+  <link rel="mask-icon" href="https://jpwdkblog.github.io/blog/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="この記事は、プリンタードライバーのアップデートを行った際に発生する問題について説明します。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="プリンタ― ドライバ―のアップデートを行った際に DEVMODE 情報が更新されない">
+<meta property="og:url" content="https://jpwdkblog.github.io/blog/2022/09/20/printer-devmode-issue/index.html">
+<meta property="og:site_name" content="Japan WDK Support Blog">
+<meta property="og:description" content="この記事は、プリンタードライバーのアップデートを行った際に発生する問題について説明します。">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2022-09-19T15:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-20T06:35:07.731Z">
+<meta property="article:author" content="jpwdkblog">
+<meta property="article:tag" content="devmode">
+<meta name="twitter:card" content="summary">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  
+<link rel="stylesheet" href="/blog/style.css">
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+  <meta name="google-site-verification" content="pWQqMJ7gh1mrMlGHKKrGh0r1IqaWrJc1dWnZowSZW-c" />
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/blog/' >
+				Japan WDK Support Blog
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/blog/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/blog/archives'>
+								Archives
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search flat-box"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu flat-box"></span></a></li>
+			</ul>
+		</div>
+		
+		<div class='nav-sub container container--flex'>
+			<a class="logo" class="flat-box" href='javascript:void(0)'>
+				Word of Forks
+			</a>
+
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a href='javascript:void(0)'><span class="icon icon-chat_bubble_outline flat-box"></span></a></li>
+				<li class='s-top'><a href='javascript:void(0)'><span class="icon icon-arrow_upward flat-box"></span></a></li>
+				<li class='s-toc'><a href='javascript:void(0)'><span class="icon icon-format_list_numbered flat-box"></span></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+<aside class="menu-phone">
+	<nav>
+		
+			<a href="/blog/" class="nav-home nav">
+				Home
+			</a>
+		
+			<a href="/blog/archives" class="nav-archives nav">
+				Archives
+			</a>
+		
+	</nav>
+</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container clearfix'>
+      <div class='l_main'>
+        <article id="post-printer-devmode-issue"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/blog/2022/09/20/printer-devmode-issue/">
+    	プリンタ― ドライバ―のアップデートを行った際に DEVMODE 情報が更新されない
+    </a>
+  </h2>
+	<time>
+	  9月 20, 2022
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/blog/categories/printscan/">printscan</a>
+    </div>
+
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E3%81%A8%E3%81%AA%E3%82%8B%E3%82%B7%E3%83%8A%E3%83%AA%E3%82%AA"><span class="toc-number">1.</span> <span class="toc-text">前提となるシナリオ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BA%E7%94%9F%E3%81%99%E3%82%8B%E5%95%8F%E9%A1%8C"><span class="toc-number">2.</span> <span class="toc-text">発生する問題</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%81%BF%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">回避方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1"><span class="toc-number">4.</span> <span class="toc-text">参考情報</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>この記事は、プリンタードライバーのアップデートを行った際に発生する問題について説明します。</p>
+<span id="more"></span>
+<br>
+
+<hr>
+<h3 id="前提となるシナリオ"><a href="#前提となるシナリオ" class="headerlink" title="前提となるシナリオ"></a>前提となるシナリオ</h3><p>プリンタードライバーのアップデート時にプライベート部分の DEVMODE サイズや構造体をプリンタードライバーが更新している場合になります。</p>
+<hr>
+<h3 id="発生する問題"><a href="#発生する問題" class="headerlink" title="発生する問題"></a>発生する問題</h3><p>プリンタードライバーのアップデート時、更新されるドライバーでは、プライベート部分の DEVMODE サイズや構造体を更新している場合があります。このようなシナリオでは、プリンタードライバーが依頼した新しいバージョンの DEVMODE の形式に合わせて、各種 DEVMODE の値を OS が レジストリへ保存・更新します。<br>しかし、ドライバーの更新タイミングにおいて、OS がレジストリへの書き込み処理を行わない問題があるため、システムの再起動等を行うと、印刷設定が保存されなかったり、プリンタードライバーが予期せぬ挙動を示したりする場合があります。</p>
+<hr>
+<h3 id="回避方法"><a href="#回避方法" class="headerlink" title="回避方法"></a>回避方法</h3><p>以下の OS のバージョンでは修正されております。</p>
+<p>・Windows 11<br>・Windows 10 21H2 (<a target="_blank" rel="noopener" href="https://support.microsoft.com/ja-jp/topic/2022-%E5%B9%B4-6-%E6%9C%88-28-%E6%97%A5-kb5014666-os-%E3%83%93%E3%83%AB%E3%83%89-19042-1806-19043-1806-19044-1806-%E3%83%97%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC-4bd911df-f290-4753-bdec-a83bc8709eb6">2022 年 6 月 28 日 — KB5014666 (OS ビルド 19042.1806、19043.1806、19044.1806) プレビュー</a>) 以降の更新プログラムが適用されている環境<br><br><br>それ以外の OS バージョンでは、明示的に SetPrinter を呼び出して DEVMODE が格納されているレジストリの更新を行います。なお、この際、スプーラーサービスが保持している DEVMODEと同じ値で SetPrinter を実行した場合、レジストリの更新が行われないため、次のように確実にてレジストリが更新されるよう、一時的に DEVMODE の値を変更して SetPrinter を 実行します。<br><br><br>回避方法としては、プリンタ―ドライバ―のアップデート後に、GetPrinter を1回、SetPrinter を2回呼び出します。<br>１．まず、GetPrinter を呼び出して、現在の DEVMODE を取得します。<br>２．続いて、1で取得した現在の DEVMODE から、値を変更（例えば、dmOrientation の値など）した DEVMODE を SetPrinter でセットします。この時、レジストリが更新されます。<br>３．最後に 1 で取得した現在の DEVMODE をそのまま、SetPrinter でセットし、値を元に戻し、かつレジストリも再度更新します。<br><br><br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/troubleshoot/windows/win32/modify-printer-settings-setprinter-api">Modify printer settings by using the SetPrinter function</a> のサンプル コードをベースとした回避方法の例となります。<br>上記 「１．まず、GetPrinter を呼び出して、現在の DEVMODE を取得します。」については、dmOrientation の値を変更するための DEVMODE と 「３．最後に 1 で取得した現在の DEVMODE をそのまま、SetPrinter でセットし、値を元に戻し、かつレジストリも再度更新します。」で 元に戻す DEVMODE を取得するために 2 回 GetPrinter を呼び出しています。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MySetPrinter</span></span><br><span class="line"><span class="comment">// Demonstrates how to use the SetPrinter API.  This particular function changes the orientation</span></span><br><span class="line"><span class="comment">// for the printer specified in pPrinterName to the orientation specified in dmOrientation.</span></span><br><span class="line"><span class="comment">// Valid values for dmOrientation are:</span></span><br><span class="line"><span class="comment">// DMORIENT_PORTRAIT (1) or DMORIENT_LANDSCAPE (2)</span></span><br><span class="line"><span class="function">BOOL <span class="title">MySetPrinter</span><span class="params">(LPTSTR pPrinterName, <span class="keyword">short</span> dmOrientation)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HANDLE hPrinter = <span class="literal">NULL</span>;</span><br><span class="line">    DWORD dwNeeded = <span class="number">0</span>;</span><br><span class="line">    PRINTER_INFO_2 *pi2 = <span class="literal">NULL</span>;</span><br><span class="line">    PRINTER_INFO_2 *pi2_org = <span class="literal">NULL</span>;</span><br><span class="line">    DEVMODE *pDevMode = <span class="literal">NULL</span>;</span><br><span class="line">    PRINTER_DEFAULTS pd;</span><br><span class="line">    BOOL bFlag;</span><br><span class="line">    LONG lFlag;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Open printer handle (on Windows NT, you need full-access because you</span></span><br><span class="line">    <span class="comment">// will eventually use SetPrinter)...</span></span><br><span class="line">    ZeroMemory(&amp;pd, <span class="keyword">sizeof</span>(pd));</span><br><span class="line">    pd.DesiredAccess = PRINTER_ALL_ACCESS;</span><br><span class="line">    bFlag = OpenPrinter(pPrinterName, &amp;hPrinter, &amp;pd);</span><br><span class="line">    <span class="keyword">if</span> (!bFlag || (hPrinter == <span class="literal">NULL</span>))</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The first GetPrinter tells you how big the buffer should be in</span></span><br><span class="line">    <span class="comment">// order to hold all of PRINTER_INFO_2. Note that this should fail with</span></span><br><span class="line">    <span class="comment">// ERROR_INSUFFICIENT_BUFFER.  If GetPrinter fails for any other reason</span></span><br><span class="line">    <span class="comment">// or dwNeeded isn&#x27;t set for some reason, then there is a problem...</span></span><br><span class="line">    SetLastError(<span class="number">0</span>);</span><br><span class="line">    bFlag = GetPrinter(hPrinter, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, &amp;dwNeeded);</span><br><span class="line">    <span class="keyword">if</span> ((!bFlag) &amp;&amp; (GetLastError() != ERROR_INSUFFICIENT_BUFFER) || (dwNeeded == <span class="number">0</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Allocate enough space for PRINTER_INFO_2...</span></span><br><span class="line">    pi2 = (PRINTER_INFO_2 *)GlobalAlloc(GPTR, dwNeeded);</span><br><span class="line">    <span class="keyword">if</span> (pi2 == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//１．まず、GetPrinter を呼び出して、現在の DEVMODE を取得します。</span></span><br><span class="line">    <span class="comment">//３．で DEVMODE の値を戻すために呼び出します。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// The second GetPrinter fills in all the current settings, so all you</span></span><br><span class="line">    <span class="comment">// need to do is modify what you&#x27;re interested in...</span></span><br><span class="line">    bFlag = GetPrinter(hPrinter, <span class="number">2</span>, (LPBYTE)pi2, dwNeeded, &amp;dwNeeded);</span><br><span class="line">    <span class="keyword">if</span> (!bFlag)</span><br><span class="line">    &#123;</span><br><span class="line">        GlobalFree(pi2);</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pi2_org = (PRINTER_INFO_2 *)GlobalAlloc(GPTR, dwNeeded);</span><br><span class="line">    <span class="keyword">if</span> (pi2_org == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        GlobalFree(pi2);</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//１．GetPrinter を呼び出して、現在の DEVMODE を取得します。</span></span><br><span class="line">    <span class="comment">//２．で dmOrientation の値を変更するために呼び出します。</span></span><br><span class="line">    bFlag = GetPrinter(hPrinter, <span class="number">2</span>, (LPBYTE)pi2_org, dwNeeded, &amp;dwNeeded);</span><br><span class="line">    <span class="keyword">if</span> (!bFlag)</span><br><span class="line">    &#123;</span><br><span class="line">        GlobalFree(pi2);</span><br><span class="line">        GlobalFree(pi2_org);</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Driver is reporting that it doesn&#x27;t support this change...</span></span><br><span class="line">    <span class="keyword">if</span> (!(pi2-&gt;pDevMode-&gt;dmFields &amp; DM_ORIENTATION))</span><br><span class="line">    &#123;</span><br><span class="line">        GlobalFree(pi2);</span><br><span class="line">        GlobalFree(pi2_org);</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Specify exactly what we are attempting to change...</span></span><br><span class="line">    pi2-&gt;pDevMode-&gt;dmFields = DM_ORIENTATION;</span><br><span class="line">    pi2-&gt;pDevMode-&gt;dmOrientation = dmOrientation;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do not attempt to set security descriptor...</span></span><br><span class="line">    pi2-&gt;pSecurityDescriptor = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//２．続いて、１で取得した現在の DEVMODE から、値を変更（例えば、dmOrientation の値など）した </span></span><br><span class="line">    <span class="comment">//DEVMODE を SetPrinter でセットします。この時、レジストリが更新されます。</span></span><br><span class="line">    <span class="comment">// Update printer information...</span></span><br><span class="line">    bFlag = SetPrinter(hPrinter, <span class="number">2</span>, (LPBYTE)pi2, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (!bFlag)</span><br><span class="line">    <span class="comment">// The driver doesn&#x27;t support, or it is unable to make the change...</span></span><br><span class="line">    &#123;</span><br><span class="line">        GlobalFree(pi2);</span><br><span class="line">        GlobalFree(pi2_org);</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//３．最後に 1 で取得した現在の DEVMODE をそのまま、SetPrinter でセットし、値を元に戻し、かつレジストリも再度更新します。</span></span><br><span class="line">    bFlag = SetPrinter(hPrinter, <span class="number">2</span>, (LPBYTE)pi2_org, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (!bFlag)</span><br><span class="line">    &#123;</span><br><span class="line">        GlobalFree(pi2);</span><br><span class="line">        GlobalFree(pi2_org);</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Tell other apps that there was a change...</span></span><br><span class="line">    SendMessageTimeout(HWND_BROADCAST, WM_DEVMODECHANGE, <span class="number">0L</span>,</span><br><span class="line">      (LPARAM)(LPCSTR)pPrinterName,</span><br><span class="line">      SMTO_NORMAL, <span class="number">1000</span>, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Clean up...</span></span><br><span class="line">    <span class="keyword">if</span> (pi2_org)</span><br><span class="line">        GlobalFree(pi2_org);</span><br><span class="line">    <span class="keyword">if</span> (pi2)</span><br><span class="line">        GlobalFree(pi2);</span><br><span class="line">    <span class="keyword">if</span> (hPrinter)</span><br><span class="line">        ClosePrinter(hPrinter);</span><br><span class="line">    <span class="keyword">if</span> (pDevMode)</span><br><span class="line">        GlobalFree(pDevMode);</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="参考情報"><a href="#参考情報" class="headerlink" title="参考情報"></a>参考情報</h3><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows/win32/printdocs/setprinter">SetPrinter 関数</a><br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows/win32/printdocs/getprinter">GetPrinter 関数</a><br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/display/the-devmodew-structure">DEVMODEW 構造体</a></p>
+<hr>
+<p><code>変更履歴</code><br>2022/09/20 created by mitsuchi</p>
+<p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>
+
+  	</div>
+	  
+	  <div class="article-tags tags">
+      
+        <a href="/blog/tags/devmode/">devmode</a>
+      
+	  </div>
+    
+		
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/blog/2022/03/10/printer-null-port-issue/" rel="next"  title="UWP アプリから nul ポートが指定されているプリンターに印刷できない">
+						UWP アプリから nul ポートが指定されているプリンターに印刷できない
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+</article>
+<script>
+	window.subData = {
+		title: 'プリンタ― ドライバ―のアップデートを行った際に DEVMODE 情報が更新されない',
+		tools: true
+	}
+</script>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src="https://jpwdkblog.github.io/blog/favicon/mstile-150x150.png">
+<div class='content'>
+    <div class='desc'>
+        このサイトはマイクロソフトの Windows Driver Kit サポート チームによって運営されております。</br></br>
+        Powered by: 祝田、津田、ジェシー、中神、上原、カイル</br></br>
+        Web master: 望月
+    </div>
+</div>
+</section>
+
+  <section class='m_widget links'>
+<div class='header'>Links</div>
+<div class='content'>
+    <ul class="entry">
+    
+        <li><a class="flat-box" target="_blank" href="https://jpaiblog.github.io/blog/">
+            <div class='name'>Japan Cognitive Service Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpiotblog.github.io/blog/">
+            <div class='name'>Japan IoT Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpmlblog.github.io/blog/">
+            <div class='name'>Japan Machine Learning Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpwdkblog.github.io/blog/">
+            <div class='name'>Japan WDK Support Blog</div>
+        </a></li>
+    
+    </ul>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/blog/categories/Hardware-Lab-Kit/"><div class='name'>Hardware Lab Kit</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"><div class='name'>Windows Driver Kit 全般</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Windows-PE/"><div class='name'>Windows PE</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/printscan/"><div class='name'>printscan</div><div class='badget'>3</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/blog/tags/IOCTL/" style="font-size: 14px; color: #808080">IOCTL</a> <a href="/blog/tags/Windows-10/" style="font-size: 14px; color: #808080">Windows 10</a> <a href="/blog/tags/Windows-11/" style="font-size: 14px; color: #808080">Windows 11</a> <a href="/blog/tags/Windows-11-HLK/" style="font-size: 14px; color: #808080">Windows 11 HLK</a> <a href="/blog/tags/devmode/" style="font-size: 14px; color: #808080">devmode</a> <a href="/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/" style="font-size: 14px; color: #808080">はじめに</a> <a href="/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/" style="font-size: 14px; color: #808080">カーネル デバッグ</a> <a href="/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/" style="font-size: 14px; color: #808080">参考情報</a> <a href="/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/" style="font-size: 14px; color: #808080">過去ブログ</a>
+    </div>
+</div>
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/damochiz" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a target="_blank" rel="noopener" href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+
+<script src="/blog/js/jquery.fitvids.js"></script>
+
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/blog/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+
+<script src="/blog/js/search.js"></script>
+
+
+<script src="/blog/js/app.js"></script>
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
