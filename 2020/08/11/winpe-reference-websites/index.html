@@ -27,7 +27,7 @@
 <meta property="og:description" content="Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。">
 <meta property="og:locale" content="ja_JP">
 <meta property="article:published_time" content="2020-08-11T03:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-20T06:43:42.876Z">
+<meta property="article:modified_time" content="2023-06-06T00:43:07.836Z">
 <meta property="article:author" content="jpwdkblog">
 <meta property="article:tag" content="参考情報">
 <meta name="twitter:card" content="summary">
@@ -44,7 +44,7 @@
     }
   </script>
   <meta name="google-site-verification" content="pWQqMJ7gh1mrMlGHKKrGh0r1IqaWrJc1dWnZowSZW-c" />
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 <body>
   <div id="loading-bar-wrapper">
@@ -165,8 +165,8 @@
 <blockquote>
 <p>デバイス ドライバー (.inf ファイル) を追加する  </p>
 <ul>
-<li><p>WinPE イメージにデバイス ドライバーを追加するには、DISM /add-driver を使用します。</p>
-<p>Dism /Add-Driver /Image:”C:\WinPE_amd64\mount” /Driver:”C:\SampleDriver\driver.inf”</p>
+<li><p>WinPE イメージにデバイス ドライバーを追加するには、DISM &#x2F;add-driver を使用します。</p>
+<p>Dism &#x2F;Add-Driver &#x2F;Image:”C:\WinPE_amd64\mount” &#x2F;Driver:”C:\SampleDriver\driver.inf”</p>
 </li>
 </ul>
 <p>1 つのコマンドを使用してイメージに複数のドライバーを追加できますが、ほとんどの場合、各ドライバー パッケージを個別に追加すると問題のトラブルシューティングが簡単になります。<br>ドライバーの詳細については、<a target="_blank" rel="noopener" href="https://nam06.safelinks.protection.outlook.com/?url=https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/winpe-add-drivers&data=02%7C01%7Cdamochiz@microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103220594&sdata=W98NawWBR4H6So2M70XucYl6WDWoZriC+B//AoTvVPE=&reserved=0">デバイス ドライバー (.inf ファイル) の追加</a> に関するページを参照してください。 使用可能なすべての <a target="_blank" rel="noopener" href="https://nam06.safelinks.protection.outlook.com/?url=https://docs.microsoft.com/ja-jp/windows-hardware/manufacture/desktop/dism-driver-servicing-command-line-options-s14&data=02%7C01%7Cdamochiz@microsoft.com%7C37c50955ca634ba702c608d8383be05c%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637321177103230589&sdata=IERaF+uCfM9z3twCzIaBnQUlytFRCisIXD3K9JGl0Ks=&reserved=0">DISM ドライバー サービス オプションを確認するには、DISM ドライバー サービスのコマンド ライン オプション</a> に関するページを参照してください。  </p>
@@ -189,7 +189,7 @@
 </li>
 <li><p><a href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/">Windows PE で IOCTL サンプルを動作させる方法について
 </a>  </p>
-<br>  </li>
+<br></li>
 </ul>
 <p>以上の内容がお役に立てば幸いです。</p>
 <hr>
@@ -281,7 +281,7 @@
     
         <li><a class="flat-box" href="/blog/categories/Windows-PE/"><div class='name'>Windows PE</div><div class='badget'>3</div></a></li>
     
-        <li><a class="flat-box" href="/blog/categories/printscan/"><div class='name'>printscan</div><div class='badget'>3</div></a></li>
+        <li><a class="flat-box" href="/blog/categories/printscan/"><div class='name'>printscan</div><div class='badget'>4</div></a></li>
     
     </ul>
     
@@ -292,7 +292,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/blog/tags/IOCTL/" style="font-size: 14px; color: #808080">IOCTL</a> <a href="/blog/tags/Windows-10/" style="font-size: 14px; color: #808080">Windows 10</a> <a href="/blog/tags/Windows-11/" style="font-size: 14px; color: #808080">Windows 11</a> <a href="/blog/tags/Windows-11-HLK/" style="font-size: 14px; color: #808080">Windows 11 HLK</a> <a href="/blog/tags/devmode/" style="font-size: 14px; color: #808080">devmode</a> <a href="/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/" style="font-size: 14px; color: #808080">はじめに</a> <a href="/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/" style="font-size: 14px; color: #808080">カーネル デバッグ</a> <a href="/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/" style="font-size: 14px; color: #808080">参考情報</a> <a href="/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/" style="font-size: 14px; color: #808080">過去ブログ</a>
+        <a href="/blog/tags/CPrintDialog/" style="font-size: 14px; color: #808080">CPrintDialog</a> <a href="/blog/tags/IOCTL/" style="font-size: 14px; color: #808080">IOCTL</a> <a href="/blog/tags/Windows-10/" style="font-size: 14px; color: #808080">Windows 10</a> <a href="/blog/tags/Windows-11/" style="font-size: 14px; color: #808080">Windows 11</a> <a href="/blog/tags/Windows-11-HLK/" style="font-size: 14px; color: #808080">Windows 11 HLK</a> <a href="/blog/tags/devmode/" style="font-size: 14px; color: #808080">devmode</a> <a href="/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/" style="font-size: 14px; color: #808080">はじめに</a> <a href="/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/" style="font-size: 14px; color: #808080">カーネル デバッグ</a> <a href="/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/" style="font-size: 14px; color: #808080">参考情報</a> <a href="/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/" style="font-size: 14px; color: #808080">過去ブログ</a>
     </div>
 </div>
 
