@@ -6,7 +6,7 @@
   <link href="https://jpwdkblog.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://jpwdkblog.github.io/blog/"/>
-  <updated>2024-08-07T02:53:33.762Z</updated>
+  <updated>2024-08-07T09:49:15.431Z</updated>
   <id>https://jpwdkblog.github.io/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://jpwdkblog.github.io/blog/2024/08/07/psa-default-value-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2024/08/07/psa-default-value-issue/</id>
     <published>2024-08-06T15:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.762Z</updated>
+    <updated>2024-08-07T09:49:15.431Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では Print Support App で発生する問題について説明します。&lt;/p&gt;</summary>
@@ -40,7 +40,7 @@
     <link href="https://jpwdkblog.github.io/blog/2023/06/05/printer-CPrintDialog-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2023/06/05/printer-CPrintDialog-issue/</id>
     <published>2023-06-04T15:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.695Z</updated>
+    <updated>2024-08-07T09:49:15.355Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事は、CPrintDialog を利用したアプリケーションから印刷した際に発生する問題について説明します。&lt;/p&gt;</summary>
@@ -59,7 +59,7 @@
     <link href="https://jpwdkblog.github.io/blog/2022/09/20/printer-devmode-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2022/09/20/printer-devmode-issue/</id>
     <published>2022-09-19T15:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.723Z</updated>
+    <updated>2024-08-07T09:49:15.383Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事は、プリンタードライバーのアップデートを行った際に発生する問題について説明します。&lt;/p&gt;</summary>
@@ -78,7 +78,7 @@
     <link href="https://jpwdkblog.github.io/blog/2022/03/10/printer-null-port-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2022/03/10/printer-null-port-issue/</id>
     <published>2022-03-10T08:30:00.000Z</published>
-    <updated>2024-08-07T02:53:33.740Z</updated>
+    <updated>2024-08-07T09:49:15.408Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Windows 10 における印刷における問題について説明します。&lt;/p&gt;</summary>
@@ -97,7 +97,7 @@
     <link href="https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/</id>
     <published>2021-12-28T00:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.777Z</updated>
+    <updated>2024-08-07T09:49:15.449Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Windows 11 に USB スキャナーを接続した問題について説明します。&lt;/p&gt;</summary>
@@ -116,7 +116,7 @@
     <link href="https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/"/>
     <id>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</id>
     <published>2021-07-12T15:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.631Z</updated>
+    <updated>2024-08-07T09:49:15.299Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows 11 及び Server 2022 用 HLK の Create project を実行する際の、”Is Windows Driver Project?” チェックボックスについて注意点を紹介いたします。  &lt;/p&gt;</summary>
@@ -135,7 +135,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/"/>
     <id>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</id>
     <published>2020-08-11T03:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.810Z</updated>
+    <updated>2024-08-07T09:49:15.477Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。&lt;/p&gt;</summary>
@@ -154,7 +154,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2024-08-07T02:53:33.651Z</updated>
+    <updated>2024-08-07T09:49:15.323Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE で IOCTL サンプルを動作させる方法についてご紹介します。&lt;/p&gt;</summary>
@@ -173,7 +173,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.795Z</updated>
+    <updated>2024-08-07T09:49:15.468Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE でのネットワーク経由のカーネルデバッガ接続方法についてご紹介します。&lt;/p&gt;</summary>
@@ -192,7 +192,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/12/past-blog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.676Z</updated>
+    <updated>2024-08-07T09:49:15.340Z</updated>
     
     
     <summary type="html">&lt;p&gt;過去のブログ情報を紹介いたします。&lt;/p&gt;</summary>
@@ -211,7 +211,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2024-08-07T02:53:33.605Z</updated>
+    <updated>2024-08-07T09:49:15.293Z</updated>
     
     
       
