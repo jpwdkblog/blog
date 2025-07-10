@@ -188,35 +188,12 @@
 
   </section>
   <section class="article typo">
-	  <p>この記事では、Windows 11 24H2 および Windows Server 2025 上での印刷処理において発生するメモリリークについて説明します。<br><br></p>
-<hr>
-<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Windows Version 24H2 (OS Build 26100) において、v3 プリンター ドライバーを使ってドキュメントを印刷すると、スプーラー サービス (spoolsv.exe) でメモリリークが発生することを確認しております。　　</p>
-<p>この現象は、v3 プリンター ドライバーの DrvEnableSurface コールバック関数以外のコールバック関数で <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows/win32/api/winddi/nf-winddi-engcreatebitmap">EngCreateBitmap 関数</a> を呼び出している場合に発生します。例えば、DrvBitBlt や DrvStretchBlt などのようなビット ブロック転送機能を実装するドライバーのコールバック関数で EngCreateBitmap &#x2F; <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows/win32/api/winddi/nf-winddi-engdeletesurface">EngDeleteSurface 関数</a> の呼び出しで発生します。<br>印刷するドキュメントの内容によって、ドライバーで実行されるコードパスが変わるため、事象の発生は 100 %ではありません。<br><br>  </p>
-<hr>
-<h3 id="現象"><a href="#現象" class="headerlink" title="現象"></a>現象</h3><p>印刷を繰り返すと、spoolsv.exe のメモリ使用量 (タスク マネージャーのワーキング セットやコミット サイズ) の値が徐々に増加します。<br>   <img src="https://jpwdkblog.github.io/images/print-memleak-issue/taskmgr.png" align="left" border="1"><br clear="left"><br><br></p>
-<p>また、実際にメモリの解放が失敗した時には、EngDeleteSurface 関数の呼び出しが失敗 (FALSE を返す) ことが確認されています。ドライバー側の処理で、EngDeleteSurface 関数の戻り値を確認していただくことでも、事象の発生有無を確認することができます。<br><br>  </p>
-<hr>
-<h3 id="回避方法"><a href="#回避方法" class="headerlink" title="回避方法"></a>回避方法</h3><p>現状、この問題を確実に回避する方法はありませんが、プリンタードライバーの分離機能を有効化することで、常時実行されているスプーラー サービスで発生するメモリリークの問題を別のプロセス (PrintIsolationHost.exe) に分離することができます。この PrintIsolationHost.exe は常駐で実行されるものではなく、一定時間使用されなくなるとプログラムが自動で終了します。確保されていたメモリはプログラム (.exe) が終了すると、強制的に解放されるため、結果的にメモリリークしていたメモリも解放さることになります。<br>プリンタードライバーの分離機能を有効化するためには、次の手順を実行します。</p>
-<ol>
-<li><p>[印刷の管理] を起動します。<br><img src="https://jpwdkblog.github.io/images/print-memleak-issue/printmgmt.png" align="left" border="1"><br clear="left">  </p>
-</li>
-<li><p>左側のペインで [プリント サーバー] - [&lt;PC 名&gt; (ローカル)] - [ドライバー] の順に展開します。対象のプリンタードライバーを右クリックして [ドライバーの分離の設定] - [分離] の順にクリックして機能を有効化します。<br><img src="https://jpwdkblog.github.io/images/print-memleak-issue/isolation.png" align="left" border="1"><br clear="left">    </p>
-<br></li>
-</ol>
-<hr>
-<h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>本問題は、Windows における GDI の問題であると認識しており、現在修正作業行っております。<br>現時点で、Windows 11 24H2 に対する修正は 2025 年 9 月の提供を目標に作業中です。Windows Server OS については、クライアント OS の提供後、約 4 カ月後となるため 2026 年 1 月あるいは 2 月に提供となる見込みです。なお、修正プログラムの提供は、他の修正プログラムの影響なども受けるため、状況によって予定は変更となる場合がございます。今後の状況については、アップデートがあり次第こちらで更新します。</p>
-<!--Original 57827011-->
-<!--Parent 55401107/2025.08D-->
+	  <p>この記事では、Windows 11 24H2 および Windows Server 2025 上での印刷処理において発生するメモリリークについて説明します。</p>
 
-<br>
-
-
-
-<hr>
-<p><code>変更履歴</code><br><code>2025/07/10 created by riwaida</code>  </p>
-<p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>
-
-
+    
+	  <div class="readmore">
+      <a href="/blog/2025/07/09/printing-causes-memory-leak/">Read More</a>
+    </div>
     
     
     
