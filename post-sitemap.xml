@@ -9,7 +9,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</loc>
-        <lastmod>2024-08-20T01:06:29.942Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.344Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</loc>
-        <lastmod>2024-08-20T01:06:29.922Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.319Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,7 +25,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/</loc>
-        <lastmod>2024-08-20T01:06:29.899Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.293Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -33,15 +33,23 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2024/08/15/psa-z-order-issue/</loc>
-        <lastmod>2024-08-20T01:06:29.870Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.275Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://jpwdkblog.github.io/blog/2024/08/07/psa-default-value-issue/</loc>
-        <lastmod>2024-08-20T01:06:29.855Z</lastmod>
+        <loc>https://jpwdkblog.github.io/blog/2024/08/23/psa-default-value-issue/</loc>
+        <lastmod>2025-07-10T04:17:57.239Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jpwdkblog.github.io/blog/2025/07/09/printing-causes-memory-leak/</loc>
+        <lastmod>2025-07-10T04:17:57.207Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -49,7 +57,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2022/03/10/printer-null-port-issue/</loc>
-        <lastmod>2024-08-20T01:06:29.840Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.141Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -57,7 +65,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2022/09/20/printer-devmode-issue/</loc>
-        <lastmod>2024-08-20T01:06:29.823Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.105Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -65,7 +73,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2023/06/05/printer-CPrintDialog-issue/</loc>
-        <lastmod>2024-08-20T01:06:29.800Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.041Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -73,7 +81,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</loc>
-        <lastmod>2024-08-20T01:06:29.784Z</lastmod>
+        <lastmod>2025-07-10T04:17:57.019Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -81,7 +89,15 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</loc>
-        <lastmod>2024-08-20T01:06:29.766Z</lastmod>
+        <lastmod>2025-07-10T04:17:56.978Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jpwdkblog.github.io/blog/2025/07/10/howto-troubleshoot-hlk-test-fail/</loc>
+        <lastmod>2025-07-10T04:17:56.946Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -89,7 +105,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</loc>
-        <lastmod>2024-08-20T01:06:29.731Z</lastmod>
+        <lastmod>2025-07-10T04:17:56.900Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -97,7 +113,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</loc>
-        <lastmod>2024-08-20T01:06:29.712Z</lastmod>
+        <lastmod>2025-07-10T04:17:56.878Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Windows 11 24H2 で印刷を行うとメモリリークが発生することがある | Japan WDK Support Blog</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="https://jpwdkblog.github.io/blog/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://jpwdkblog.github.io/blog/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jpwdkblog.github.io/blog/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jpwdkblog.github.io/blog/favicon/favicon-16x16.png">
+  <link rel="manifest" href="https://jpwdkblog.github.io/blog/favicon/site.webmanifest">
+  <link rel="mask-icon" href="https://jpwdkblog.github.io/blog/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="この記事では、Windows 11 24H2 および Windows Server 2025 上での印刷処理において発生するメモリリークについて説明します。  概要Windows Version 24H2 (OS Build 26100) において、v3 プリンター ドライバーを使ってドキュメントを印刷すると、スプーラー サービス (spoolsv.exe) でメモリリークが発生することを確認して">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows 11 24H2 で印刷を行うとメモリリークが発生することがある">
+<meta property="og:url" content="https://jpwdkblog.github.io/blog/2025/07/09/printing-causes-memory-leak/index.html">
+<meta property="og:site_name" content="Japan WDK Support Blog">
+<meta property="og:description" content="この記事では、Windows 11 24H2 および Windows Server 2025 上での印刷処理において発生するメモリリークについて説明します。  概要Windows Version 24H2 (OS Build 26100) において、v3 プリンター ドライバーを使ってドキュメントを印刷すると、スプーラー サービス (spoolsv.exe) でメモリリークが発生することを確認して">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/print-memleak-issue/taskmgr.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/print-memleak-issue/printmgmt.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/print-memleak-issue/isolation.png">
+<meta property="article:published_time" content="2025-07-09T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-10T04:17:57.207Z">
+<meta property="article:author" content="jpwdkblog">
+<meta property="article:tag" content="print">
+<meta property="article:tag" content="Windows 11 24H2">
+<meta property="article:tag" content="Windows Server 2025">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpwdkblog.github.io/images/print-memleak-issue/taskmgr.png">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  
+<link rel="stylesheet" href="/blog/style.css">
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+  <meta name="google-site-verification" content="pWQqMJ7gh1mrMlGHKKrGh0r1IqaWrJc1dWnZowSZW-c" />
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/blog/' >
+				Japan WDK Support Blog
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/blog/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/blog/archives'>
+								Archives
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search flat-box"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu flat-box"></span></a></li>
+			</ul>
+		</div>
+		
+		<div class='nav-sub container container--flex'>
+			<a class="logo" class="flat-box" href='javascript:void(0)'>
+				Word of Forks
+			</a>
+
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a href='javascript:void(0)'><span class="icon icon-chat_bubble_outline flat-box"></span></a></li>
+				<li class='s-top'><a href='javascript:void(0)'><span class="icon icon-arrow_upward flat-box"></span></a></li>
+				<li class='s-toc'><a href='javascript:void(0)'><span class="icon icon-format_list_numbered flat-box"></span></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+<aside class="menu-phone">
+	<nav>
+		
+			<a href="/blog/" class="nav-home nav">
+				Home
+			</a>
+		
+			<a href="/blog/archives" class="nav-archives nav">
+				Archives
+			</a>
+		
+	</nav>
+</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container clearfix'>
+      <div class='l_main'>
+        <article id="post-printing-causes-memory-leak"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/blog/2025/07/09/printing-causes-memory-leak/">
+    	Windows 11 24H2 で印刷を行うとメモリリークが発生することがある
+    </a>
+  </h2>
+	<time>
+	  7月 9, 2025
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/blog/categories/printscan/">printscan</a>
+    </div>
+
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">概要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8F%BE%E8%B1%A1"><span class="toc-number">2.</span> <span class="toc-text">現象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%81%BF%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">回避方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%B3%81"><span class="toc-number">4.</span> <span class="toc-text">状況</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>この記事では、Windows 11 24H2 および Windows Server 2025 上での印刷処理において発生するメモリリークについて説明します。<br><br></p>
+<hr>
+<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Windows Version 24H2 (OS Build 26100) において、v3 プリンター ドライバーを使ってドキュメントを印刷すると、スプーラー サービス (spoolsv.exe) でメモリリークが発生することを確認しております。　　</p>
+<p>この現象は、v3 プリンター ドライバーの DrvEnableSurface コールバック関数以外のコールバック関数で <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows/win32/api/winddi/nf-winddi-engcreatebitmap">EngCreateBitmap 関数</a> を呼び出している場合に発生します。例えば、DrvBitBlt や DrvStretchBlt などのようなビット ブロック転送機能を実装するドライバーのコールバック関数で EngCreateBitmap &#x2F; <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows/win32/api/winddi/nf-winddi-engdeletesurface">EngDeleteSurface 関数</a> の呼び出しで発生します。<br>印刷するドキュメントの内容によって、ドライバーで実行されるコードパスが変わるため、事象の発生は 100 %ではありません。<br><br>  </p>
+<hr>
+<h3 id="現象"><a href="#現象" class="headerlink" title="現象"></a>現象</h3><p>印刷を繰り返すと、spoolsv.exe のメモリ使用量 (タスク マネージャーのワーキング セットやコミット サイズ) の値が徐々に増加します。<br>   <img src="https://jpwdkblog.github.io/images/print-memleak-issue/taskmgr.png" align="left" border="1"><br clear="left"><br><br></p>
+<p>また、実際にメモリの解放が失敗した時には、EngDeleteSurface 関数の呼び出しが失敗 (FALSE を返す) ことが確認されています。ドライバー側の処理で、EngDeleteSurface 関数の戻り値を確認していただくことでも、事象の発生有無を確認することができます。<br><br>  </p>
+<hr>
+<h3 id="回避方法"><a href="#回避方法" class="headerlink" title="回避方法"></a>回避方法</h3><p>現状、この問題を確実に回避する方法はありませんが、プリンタードライバーの分離機能を有効化することで、常時実行されているスプーラー サービスで発生するメモリリークの問題を別のプロセス (PrintIsolationHost.exe) に分離することができます。この PrintIsolationHost.exe は常駐で実行されるものではなく、一定時間使用されなくなるとプログラムが自動で終了します。確保されていたメモリはプログラム (.exe) が終了すると、強制的に解放されるため、結果的にメモリリークしていたメモリも解放さることになります。<br>プリンタードライバーの分離機能を有効化するためには、次の手順を実行します。</p>
+<ol>
+<li><p>[印刷の管理] を起動します。<br><img src="https://jpwdkblog.github.io/images/print-memleak-issue/printmgmt.png" align="left" border="1"><br clear="left">  </p>
+</li>
+<li><p>左側のペインで [プリント サーバー] - [&lt;PC 名&gt; (ローカル)] - [ドライバー] の順に展開します。対象のプリンタードライバーを右クリックして [ドライバーの分離の設定] - [分離] の順にクリックして機能を有効化します。<br><img src="https://jpwdkblog.github.io/images/print-memleak-issue/isolation.png" align="left" border="1"><br clear="left">    </p>
+<br></li>
+</ol>
+<hr>
+<h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>本問題は、Windows における GDI の問題であると認識しており、現在修正作業行っております。<br>現時点で、Windows 11 24H2 に対する修正は 2025 年 9 月の提供を目標に作業中です。Windows Server OS については、クライアント OS の提供後、約 4 カ月後となるため 2026 年 1 月あるいは 2 月に提供となる見込みです。なお、修正プログラムの提供は、他の修正プログラムの影響なども受けるため、状況によって予定は変更となる場合がございます。今後の状況については、アップデートがあり次第こちらで更新します。</p>
+<!--Original 57827011-->
+<!--Parent 55401107/2025.08D-->
+
+<br>
+
+
+
+<hr>
+<p><code>変更履歴</code><br><code>2025/07/10 created by riwaida</code>  </p>
+<p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>
+
+  	</div>
+	  
+	  <div class="article-tags tags">
+      
+        <a href="/blog/tags/print/">print</a>
+      
+        <a href="/blog/tags/Windows-11-24H2/">Windows 11 24H2</a>
+      
+        <a href="/blog/tags/Windows-Server-2025/">Windows Server 2025</a>
+      
+	  </div>
+    
+		
+	
+		<div class="art-item-footer">
+				
+					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/blog/2025/07/10/howto-troubleshoot-hlk-test-fail/" rel="prev"  title="HLK のテストが失敗した場合のトラブルシューティング手順">
+						HLK のテストが失敗した場合のトラブルシューティング手順 
+					</a></span>
+				
+				
+					<span class="art-item-right">next：<a href="/blog/2024/08/23/psa-default-value-issue/" rel="next"  title="Print Support App (PSA) にて用紙の設定が既定の値にならない">
+						Print Support App (PSA) にて用紙の設定が既定の値にならない
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+</article>
+<script>
+	window.subData = {
+		title: 'Windows 11 24H2 で印刷を行うとメモリリークが発生することがある',
+		tools: true
+	}
+</script>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src="https://jpwdkblog.github.io/blog/favicon/mstile-150x150.png">
+<div class='content'>
+    <div class='desc'>
+        このサイトはマイクロソフトの Windows Driver Kit サポート チームによって運営されております。</br></br>
+        Powered by: 祝田、津田、ジェシー、中神、上原、カイル</br></br>
+        Web master: 望月
+    </div>
+</div>
+</section>
+
+  <section class='m_widget links'>
+<div class='header'>Links</div>
+<div class='content'>
+    <ul class="entry">
+    
+        <li><a class="flat-box" target="_blank" href="https://jpaiblog.github.io/blog/">
+            <div class='name'>Japan Cognitive Service Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpiotblog.github.io/blog/">
+            <div class='name'>Japan IoT Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpmlblog.github.io/blog/">
+            <div class='name'>Japan Machine Learning Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpwdkblog.github.io/blog/">
+            <div class='name'>Japan WDK Support Blog</div>
+        </a></li>
+    
+    </ul>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/blog/categories/Hardware-Lab-Kit/"><div class='name'>Hardware Lab Kit</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"><div class='name'>Windows Driver Kit 全般</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Windows-PE/"><div class='name'>Windows PE</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/hlk/"><div class='name'>hlk</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/printscan/"><div class='name'>printscan</div><div class='badget'>7</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/blog/tags/CPrintDialog/" style="font-size: 14px; color: #808080">CPrintDialog</a> <a href="/blog/tags/IOCTL/" style="font-size: 14px; color: #808080">IOCTL</a> <a href="/blog/tags/Windows-10/" style="font-size: 14px; color: #808080">Windows 10</a> <a href="/blog/tags/Windows-11/" style="font-size: 14px; color: #808080">Windows 11</a> <a href="/blog/tags/Windows-11-24H2/" style="font-size: 14px; color: #808080">Windows 11 24H2</a> <a href="/blog/tags/Windows-11-HLK/" style="font-size: 14px; color: #808080">Windows 11 HLK</a> <a href="/blog/tags/Windows-Server-2025/" style="font-size: 14px; color: #808080">Windows Server 2025</a> <a href="/blog/tags/devmode/" style="font-size: 14px; color: #808080">devmode</a> <a href="/blog/tags/print/" style="font-size: 14px; color: #808080">print</a> <a href="/blog/tags/printer/" style="font-size: 20px; color: #000">printer</a> <a href="/blog/tags/test/" style="font-size: 14px; color: #808080">test</a> <a href="/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/" style="font-size: 14px; color: #808080">はじめに</a> <a href="/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/" style="font-size: 14px; color: #808080">カーネル デバッグ</a> <a href="/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/" style="font-size: 14px; color: #808080">参考情報</a> <a href="/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/" style="font-size: 14px; color: #808080">過去ブログ</a>
+    </div>
+</div>
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/damochiz" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a target="_blank" rel="noopener" href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+
+<script src="/blog/js/jquery.fitvids.js"></script>
+
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/blog/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+
+<script src="/blog/js/search.js"></script>
+
+
+<script src="/blog/js/app.js"></script>
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
