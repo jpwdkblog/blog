@@ -4,6 +4,66 @@
   
     
     <entry>
+      <title>Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 3 - ドライバーロード時のデバッガー アタッチ)</title>
+      <link href="/blog/2025/10/02/umdf_remote_debug_part3/"/>
+      <url>/blog/2025/10/02/umdf_remote_debug_part3/</url>
+      
+        <content type="html"><![CDATA[<p>この記事では、Visual Studio と Remote Tools for Visual Studio を使用した User Mode Driver のリモート デバッグ方法について説明します。</p><span id="more"></span><br><hr><h3 id="事前準備"><a href="#事前準備" class="headerlink" title="事前準備"></a>事前準備</h3><p>以下のパート 1, 2 が完了していること。<br>  <a href="https://jpwdkblog.github.io/blog/2025/09/30/umdf_remote_debug_part1/">Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 1 - ドライバーのビルドとインストール)</a><br>  <a href="https://jpwdkblog.github.io/blog/2025/10/01/umdf_remote_debug_part2/">Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 2 - デバッガーの接続とデバッグ)</a>  </p><br>  <h3 id="ドライバーの初期化からデバッグを開始する"><a href="#ドライバーの初期化からデバッグを開始する" class="headerlink" title="ドライバーの初期化からデバッグを開始する"></a>ドライバーの初期化からデバッグを開始する</h3><p>パート 1 と 2 では、既にロードされているドライバーのホスト プロセス (WUDFHost.exe) に対してデバッガーをアタッチしました。<br>しかしこの方法では、ドライバーの初期化処理である <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/ddi/wdm/nc-wdm-driver_initialize"><code>DriverEntry</code></a> や <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"><code>EvtDriverDeviceAdd</code></a> コールバック ルーチン内の処理中にデバッガーをアタッチすることができず、デバッグを行うことができません。次の手順では、この問題を解決するための設定とリモート デバッグを開始する方法を説明します。  </p><ol><li>ターゲット PC 上で、レジストリ エディタ (regedit.exe) を起動します。起動後、次のレジストリを設定します。  <table><thead><tr><th><strong>レジストリ キー</strong></th><th><strong>値の型</strong></th><th><strong>値の名前</strong></th><th><strong>値</strong></th></tr></thead><tbody><tr><td>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WUDF\DebugMode</td><td>REG_DWORD</td><td>DebugModeFlags</td><td>0x07 (16進)</td></tr><tr><td>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WUDF\Services\{<em>ドライバー サービス名</em>}\Parameters\Wdf</td><td>REG_DWORD</td><td>HostProcessDbgBreakOnDriverLoad</td><td>120 (秒)</td></tr></tbody></table>[<code>DebugModeFlags</code>(<a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#debugmodeflags">https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#debugmodeflags</a>) はデバッグ モードを有効化し、デバイス プールの機能を無効化します。さらに再起動までのタイムアウトを無効化します。<br><a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#hostprocessdbgbreakondriverload-driver-specific"><code>HostProcessDbgBreakOnDriverLoad</code></a> は、デバッガーがアタッチされるまでの待機時間を秒単位で指定します。レジストリ キーにある <em>ドライバー サービス名</em> は、INF ファイルの <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/specifying-wdf-directives-in-inf-files#umdfservice"><code>UmdfService</code></a> ディレクティブに指定した <em>serviceName</em> です。<br>&lt;Toaster UMDF ドライバーの例&gt;<br>この例では <code>wdfsimpleum</code> が <em>serviceName</em> となります。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">;-------------- WDF specific section -------------</span><br><span class="line">[Toaster_Device.NT.Wdf]</span><br><span class="line">UmdfService=wdfsimpleum, Toaster_Install</span><br><span class="line">UmdfServiceOrder=wdfsimpleum</span><br></pre></td></tr></table></figure></li></ol>  <br>     <ol start="2"><li><p>ターゲット PC 上でデバイス マネージャーを起動して、対象のデバイスを一度無効化し、ドライバーをアンロードされた状態にします。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/devmgr_disable.png" align="left" border="1"><br clear="left">    </p><br>     </li><li><p>開発環境の PC の Visual Studio で <code>DriverEntry</code> 関数と <code>ToasterEvtDeviceAdd</code> 関数にブレークポイントをセットしておきます。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/setbp_driverentry.png" width="50%" align="left" border="1"><br clear="left">  </p><br>   </li><li><p>開発環境の PC の Visual Studio で <strong>[デバッグ]</strong> &gt; <strong>[プロセスにアタッチ]</strong> を選択し (または Ctrl+Alt+P キーを押し)、**[プロセスにアタッチ]** ダイアログ ボックスを開きます。**[接続の種類]** を <strong>[リモート (Windows - 認証なし)]</strong> の設定が維持されていることを確認し、フィルターのボックスに <em>WUDFHost.exe</em> と入力します。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/attach_wudfhost.png" width="50%" align="left" border="1"><br clear="left">  </p><blockquote><p>[!NOTE]<br>上の画像のように、既に起動している WUDFHost.exe が表示される場合もありますが、これはデバッグ対象のドライバー用プロセスではないため、アタッチしないでください。次の手順でデバイスを有効化した時に、対象のプロセスが分からなくならないよう、起動済み WUDFHost.exe の PIDをメモしておくと、後の手順でプロセスを特定しやすくなります。</p></blockquote></li></ol><br>  <ol start="5"><li><p>ターゲット PC に移動し、デバイス マネージャーでデバイスを有効化します。</p></li><li><p>開発環境の PC に戻り <strong>[プロセスにアタッチ]</strong> ダイアログ ボックスに参照すると、新たに <code>WUDFHost.exe</code> が増えていることが確認できるため、そのプロセスを選択して、**[アタッチする]** をクリックします。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/attach_newwudfhost.png" width="50%" align="left" border="1"><br clear="left">  </p></li><li><p><code>DebugBreak</code> のコードにヒットして、自動でデバッガーにブレークインします。F5 キーを押下して、そのまま実行を継続すると、手順 3 でドライバーの <code>DriverEntry</code> に設定しておいたブレークポイントにヒットして実行が停止します。そして、ステップ実行などによるデバッグ作業が行えるようになります。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/stop_driverentry.png" width="50%" align="left" border="1"><br clear="left"></p></li></ol><br>  <h3 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h3><p>手順にまとめると複雑な作業に見えますが、一連の操作に慣れてしまえば、簡単な操作でデバッグ作業を行うことができます。<br>デバッガーを接続して、コードの実行状況を正しく把握することで、推測ベースのトライ &amp; エラーによる問題解決よりも、確実な調査を行えます。リモートによるデバッガー接続を行うメリットの一つとして、ターゲット PC 上でストレステストやランダムなテストを実行する長時間の試験においても、開発環境側には大きな影響を受けないという利点があります。<br>さらに、Visual Studio を使ってプロセスにアタッチすることで、Visual Studio の <a href="https://learn.microsoft.com/ja-jp/visualstudio/profiling/profiling-feature-tour?view=vs-2022&pivots=programming-language-cpp#measure-performance-while-debugging">診断ツール</a> も利用することができます。診断ツールでは、CPU、メモリの使用状況を視覚的に確認でき、メモリリークの調査も行うことができます。  </p><br>    <br>    <hr><p><code>変更履歴</code><br><code>2025/10/01 created by riwaida</code></p><p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Debug </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Debug </tag>
+            
+            <tag> UMDF </tag>
+            
+            <tag> Visual Studio </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Windows 11 24H2 の WIA ドライバーのインストールにおいて ICM Profile が適用されない</title>
+      <link href="/blog/2025/10/02/w11_24h2_icmprofile_issue/"/>
+      <url>/blog/2025/10/02/w11_24h2_icmprofile_issue/</url>
+      
+        <content type="html"><![CDATA[<p>この記事では、Windows 11 24H2 における WIA デバイス の INF ファイルに指定されているベンダー指定のカラー プロファイル (Image Color Matching Profile) が適用されない問題について説明します。</p><span id="more"></span><br><hr><h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Windows 11 Version 24H2 (OS Build 26100) において、WIA ドライバー (スキャナー ドライバーなど) の INF ファイルで指定できる <code>ICMProfiles</code> の値が、ドライバーのインストールを行っても正しく適用されません。<br>例えば、INF ファイルに次のような記述が行われている場合が該当します。 </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ICMProfiles=&quot;My Scanner Color Space Profile.icm&quot;</span><br></pre></td></tr></table></figure><p>WIA ドライバーの INF ファイルの完全な例については、次のドキュメントをご参照ください。<br><a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/image/--hello-world---installation-file">Hello World インストール ファイル - Windows drivers | Microsoft Learn</a>  </p><p>また、WIA ドライバー固有の INF ファイル エントリについては、次のドキュメントをご参照ください。<br><a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/image/inf-files-for-wia-devices">WIA デバイスの INF ファイル - Windows drivers | Microsoft Learn</a>  </p><br>    <hr><h3 id="現象"><a href="#現象" class="headerlink" title="現象"></a>現象</h3><p>この現象は Windows 11 24H2 で行われた変更が原因で発生しており、現状 100% の確率で発生します。なお、Windows 11 23H2 などの以前のバージョンでは発生しません。<br>また、次のレジストリが書き込まれていないことで、事象の発生有無を確認することもできます。  </p><table><thead><tr><th><strong>レジストリ キー</strong></th><th><strong>値の型</strong></th><th><strong>値の名前</strong></th></tr></thead><tbody><tr><td>HKLM\System\CurrentControlSet\Control\Class\{6bdd1fc6-810f-11d0-bec7-08002be2092f}\{デバイスの番号}\DeviceData</td><td>REG_MULTI_SZ</td><td>ICMProfile</td></tr></tbody></table><p>なお、値が設定されていない場合、標準の sRGB プロファイル (<em>sRGB Color Space Profile.icm</em>) が利用されます。そのため、INF ファイルに同プロファイルを指定しているドライバーでは、この問題によりデフォルトのプロファイルが利用されることとなるため、実質的な影響はありません。<br><br><br><br>  </p><hr><h3 id="回避方法"><a href="#回避方法" class="headerlink" title="回避方法"></a>回避方法</h3><p>現時点では、INF ファイルのみでこの問題を回避する方法はありません。<br>しかし、ドライバーのインストール後、プログラム コードを用いて、API <code>InstallColorProfile</code> と <code>WcsAssociateColorProfileWithDevice</code> を呼び出すことで、指定した ICM Profile のインストールと WIA デバイスへの関連付けを行うことができます。<br>これらの API を利用するコード サンプルは次のリンクよりご参照ください。  </p><p><a href="https://github.com/jpwdkblog/jpwdkblog.github.io/blob/master/samples/wia/icmprofile/ApplyIcmProfile.cpp">サンプル コード: ApplyIcmProfile.cpp</a>  </p><blockquote><p>[!NOTE]<br>このサンプルコードはあくまで API の利用方法を説明するためのコードであり、動作を保証するものではないということをご了承ください。  </p></blockquote><p>上記各 API の詳細については次のドキュメントをご参照ください。<br><a href="https://learn.microsoft.com/en-us/windows/win32/api/icm/nf-icm-installcolorprofilew">InstallColorProfileW - Win32 apps | Microsoft Learn</a><br><a href="https://learn.microsoft.com/en-us/windows/win32/api/icm/nf-icm-wcsassociatecolorprofilewithdevice">WcsAssociateColorProfileWithDevice - Win32 apps | Microsoft Learn</a></p><br>  <br>  <hr><h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>本問題は、Windows の不具合であると認識しており、現在修正に向けて作業中となります。<br>明確な修正プログラムの提供時期については現時点では未定ですが、過去の経緯や現段階での作業状況から 2026 年 1 月ごろとなると予想しております。<br>具体的な提供時期などアップデートがあり次第、こちらで状況を更新いたします。   </p><p>関連情報：<a href="https://learn.microsoft.com/ja-jp/windows/deployment/update/release-cycle">Windows クライアントの更新リリース サイクル | Microsoft Learn</a>  </p><!--ID:59120214--><!--Rel:2025.10D--><!--Primary:Feature_Bundle_2510=DisabledByDefault--><!--Feature_SetupApi_FilterInstallInfoSet=EnabledByDefault--><br><hr><p><code>変更履歴</code><br><code>2025/10/02 created by riwaida</code></p><p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> printscan </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows 11 24H2 </tag>
+            
+            <tag> bug </tag>
+            
+            <tag> WIA </tag>
+            
+            <tag> install </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 2 - デバッガーの接続とデバッグ)</title>
       <link href="/blog/2025/10/01/umdf_remote_debug_part2/"/>
       <url>/blog/2025/10/01/umdf_remote_debug_part2/</url>
