@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Archives: 2023 | Japan WDK Support Blog</title>
+  <title>Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう | Japan WDK Support Blog</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -19,13 +19,21 @@
   <meta name="theme-color" content="#ffffff">
   <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Japan WDK Support Blog">
-<meta property="og:url" content="https://jpwdkblog.github.io/blog/archives/2023/index.html">
+  <meta name="description" content="この記事では Print Support App の仮想プリンターで発生する問題について説明します。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう">
+<meta property="og:url" content="https://jpwdkblog.github.io/blog/2026/01/09/virtualprinter-z-order-issue/index.html">
 <meta property="og:site_name" content="Japan WDK Support Blog">
+<meta property="og:description" content="この記事では Print Support App の仮想プリンターで発生する問題について説明します。">
 <meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/virtualprinter-z-order-issue/repro.png">
+<meta property="og:image" content="https://jpwdkblog.github.io/images/virtualprinter-z-order-issue/taskbar.png">
+<meta property="article:published_time" content="2026-01-08T15:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-09T04:28:45.441Z">
 <meta property="article:author" content="jpwdkblog">
+<meta property="article:tag" content="printer">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpwdkblog.github.io/images/virtualprinter-z-order-issue/repro.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -119,57 +127,84 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        
+        <article id="post-virtualprinter-z-order-issue"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/blog/2026/01/09/virtualprinter-z-order-issue/">
+    	Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう
+    </a>
+  </h2>
+	<time>
+	  1月 9, 2026
+	</time>
 	
-  <script>
-    window.subData= { title:'Year : 2023'}
-  </script>
-
-<section class="post-list">
-	
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/blog/2023/06/05/printer-CPrintDialog-issue/">
-        CPrintDialog を利用したアプリケーションから印刷できない
-      </a>
-    </h2>
-    
-    <time>
-      6月 5, 2023
-    </time>
-		
     
     <div class='cats'>
         <a href="/blog/categories/printscan/">printscan</a>
     </div>
 
-  </section>
-  <section class="article typo">
-	  <p>この記事は、CPrintDialog を利用したアプリケーションから印刷した際に発生する問題について説明します。</p>
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">概要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8F%BE%E8%B1%A1"><span class="toc-number">2.</span> <span class="toc-text">現象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-number">3.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E9%81%BF%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">回避方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%B3%81"><span class="toc-number">5.</span> <span class="toc-text">状況</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>この記事では Print Support App の仮想プリンターで発生する問題について説明します。</p>
+<span id="more"></span>
+<br>
 
-    
-	  <div class="readmore">
-      <a href="/blog/2023/06/05/printer-CPrintDialog-issue/">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+<hr>
+<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>アプリから Print Support App (PSA) で作成された仮想プリンターに対して印刷を行った際、仮想プリンターの <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/uwp/api/windows.graphics.printing.workflow.printworkflowvirtualprintersession.virtualprinterdataavailable?view=winrt-26100">PrintWorkflowVirtualPrinterSession.VirtualPrinterDataAvailable</a> で <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/uwp/api/windows.graphics.printing.workflow.printworkflowuilauncher.launchandcompleteuiasync?view=winrt-26100">LaunchAndCompleteUIAsync</a> を呼び出してプリント ワークフロー Job UI を表示した際に、表示された Job UI のウィンドウが、印刷を行ったアプリの背後に隠れてしまう現象が発生します。<br>この現象は、印刷を行ったアプリが 32-bit アプリケーションだった場合に発生します。64-bit OS 上の 64-bit アプリの場合は、発生しません。<br><br><br><br></p>
+<hr>
+<h3 id="現象"><a href="#現象" class="headerlink" title="現象"></a>現象</h3><p>問題の現象が発生する手順は次の通りです。</p>
+<ol>
+<li>32-bit アプリケーションを起動します。(例：%WINDIR%\SysWOW64\msinfo32.exe など)</li>
+<li>仮想プリンターに対して印刷を行います。</li>
+<li>仮想プリンターのワークフロー Job UI ウィンドウが開きます。</li>
+<li>次の青く囲った部分のように、PSA のウィンドウが印刷を行ったアプリ ウィンドウの背後に隠れてしまうことがあります。<br><img src="https://jpwdkblog.github.io/images/virtualprinter-z-order-issue/repro.png" align="left" border="1"><br clear="left"><br>
+<br></li>
+</ol>
+<hr>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>フォアグラウンド ウィンドウを設定できるプロセスは、システムによって制限されています。制限を解除するためには、AllowSetForegroundWindow 関数などを用いて事前に設定が必要となります。<br>印刷を行うアプリと、ワークフロー Job UI を表示するプログラムは、別プロセスでありこれらの制限を解除する必要がありますが、現状では、特定の条件下においてこの制限を正しく解除できていないため、ワークフロー Job UI が前面に表示されない問題が発生しています。<br><br><br><br></p>
+<hr>
+<h3 id="回避方法"><a href="#回避方法" class="headerlink" title="回避方法"></a>回避方法</h3><p>この問題に対して PSA 側での実装では、有効な回避方法がありません。<br>そのため、本現象が発生した場合は、アプリの背面に表示されたウィンドウをクリックして、前面に表示して操作を行ってください。あるいは、タスクバーでハイライトされているアイコンをクリックして、ワークフロー Job UI の操作を行ってください。<br><img src="https://jpwdkblog.github.io/images/virtualprinter-z-order-issue/taskbar.png" align="left" border="1"><br clear="left"><br><br><br><br></p>
+<hr>
+<h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>この現象についてはマイクロソフトの不具合として認識しており開発部門へ報告済みとなりますが、現時点では修正の予定が決まっておりません。</p>
+<!--OS Bug ID 60581804-->
+
+<hr>
+<p><code>変更履歴</code><br><code>2026/01/09 created by riwaida</code>  </p>
+
+  	</div>
+	  
+	  <div class="article-tags tags">
       
-        <a href="/blog/tags/CPrintDialog/">CPrintDialog</a>
+        <a href="/blog/tags/printer/">printer</a>
       
 	  </div>
     
-  </section>
+		
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/blog/2025/10/02/w11_24h2_icmprofile_issue/" rel="next"  title="Windows 11 24H2 の WIA ドライバーのインストールにおいて ICM Profile が適用されない">
+						Windows 11 24H2 の WIA ドライバーのインストールにおいて ICM Profile が適用されない
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
 </article>
-    </div>
-  
-</section>
-
-
+<script>
+	window.subData = {
+		title: 'Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう',
+		tools: true
+	}
+</script>
 
       </div>
       <aside class='l_side'>

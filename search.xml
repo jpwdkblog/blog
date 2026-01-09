@@ -4,27 +4,23 @@
   
     
     <entry>
-      <title>Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 3 - ドライバーロード時のデバッガー アタッチ)</title>
-      <link href="/blog/2025/10/02/umdf_remote_debug_part3/"/>
-      <url>/blog/2025/10/02/umdf_remote_debug_part3/</url>
+      <title>Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう</title>
+      <link href="/blog/2026/01/09/virtualprinter-z-order-issue/"/>
+      <url>/blog/2026/01/09/virtualprinter-z-order-issue/</url>
       
-        <content type="html"><![CDATA[<p>この記事では、Visual Studio と Remote Tools for Visual Studio を使用した User Mode Driver のリモート デバッグ方法について説明します。</p><span id="more"></span><br><hr><h3 id="事前準備"><a href="#事前準備" class="headerlink" title="事前準備"></a>事前準備</h3><p>以下のパート 1, 2 が完了していること。<br>  <a href="https://jpwdkblog.github.io/blog/2025/09/30/umdf_remote_debug_part1/">Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 1 - ドライバーのビルドとインストール)</a><br>  <a href="https://jpwdkblog.github.io/blog/2025/10/01/umdf_remote_debug_part2/">Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 2 - デバッガーの接続とデバッグ)</a>  </p><br>  <h3 id="ドライバーの初期化からデバッグを開始する"><a href="#ドライバーの初期化からデバッグを開始する" class="headerlink" title="ドライバーの初期化からデバッグを開始する"></a>ドライバーの初期化からデバッグを開始する</h3><p>パート 1 と 2 では、既にロードされているドライバーのホスト プロセス (WUDFHost.exe) に対してデバッガーをアタッチしました。<br>しかしこの方法では、ドライバーの初期化処理である <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/ddi/wdm/nc-wdm-driver_initialize"><code>DriverEntry</code></a> や <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"><code>EvtDriverDeviceAdd</code></a> コールバック ルーチン内の処理中にデバッガーをアタッチすることができず、デバッグを行うことができません。次の手順では、この問題を解決するための設定とリモート デバッグを開始する方法を説明します。  </p><ol><li>ターゲット PC 上で、レジストリ エディタ (regedit.exe) を起動します。起動後、次のレジストリを設定します。  <table><thead><tr><th><strong>レジストリ キー</strong></th><th><strong>値の型</strong></th><th><strong>値の名前</strong></th><th><strong>値</strong></th></tr></thead><tbody><tr><td>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WUDF\DebugMode</td><td>REG_DWORD</td><td>DebugModeFlags</td><td>0x07 (16進)</td></tr><tr><td>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WUDF\Services\{<em>ドライバー サービス名</em>}\Parameters\Wdf</td><td>REG_DWORD</td><td>HostProcessDbgBreakOnDriverLoad</td><td>120 (秒)</td></tr></tbody></table>[<code>DebugModeFlags</code>(<a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#debugmodeflags">https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#debugmodeflags</a>) はデバッグ モードを有効化し、デバイス プールの機能を無効化します。さらに再起動までのタイムアウトを無効化します。<br><a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#hostprocessdbgbreakondriverload-driver-specific"><code>HostProcessDbgBreakOnDriverLoad</code></a> は、デバッガーがアタッチされるまでの待機時間を秒単位で指定します。レジストリ キーにある <em>ドライバー サービス名</em> は、INF ファイルの <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/specifying-wdf-directives-in-inf-files#umdfservice"><code>UmdfService</code></a> ディレクティブに指定した <em>serviceName</em> です。<br>&lt;Toaster UMDF ドライバーの例&gt;<br>この例では <code>wdfsimpleum</code> が <em>serviceName</em> となります。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">;-------------- WDF specific section -------------</span><br><span class="line">[Toaster_Device.NT.Wdf]</span><br><span class="line">UmdfService=wdfsimpleum, Toaster_Install</span><br><span class="line">UmdfServiceOrder=wdfsimpleum</span><br></pre></td></tr></table></figure></li></ol>  <br>     <ol start="2"><li><p>ターゲット PC 上でデバイス マネージャーを起動して、対象のデバイスを一度無効化し、ドライバーをアンロードされた状態にします。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/devmgr_disable.png" align="left" border="1"><br clear="left">    </p><br>     </li><li><p>開発環境の PC の Visual Studio で <code>DriverEntry</code> 関数と <code>ToasterEvtDeviceAdd</code> 関数にブレークポイントをセットしておきます。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/setbp_driverentry.png" width="50%" align="left" border="1"><br clear="left">  </p><br>   </li><li><p>開発環境の PC の Visual Studio で <strong>[デバッグ]</strong> &gt; <strong>[プロセスにアタッチ]</strong> を選択し (または Ctrl+Alt+P キーを押し)、**[プロセスにアタッチ]** ダイアログ ボックスを開きます。**[接続の種類]** を <strong>[リモート (Windows - 認証なし)]</strong> の設定が維持されていることを確認し、フィルターのボックスに <em>WUDFHost.exe</em> と入力します。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/attach_wudfhost.png" width="50%" align="left" border="1"><br clear="left">  </p><blockquote><p>[!NOTE]<br>上の画像のように、既に起動している WUDFHost.exe が表示される場合もありますが、これはデバッグ対象のドライバー用プロセスではないため、アタッチしないでください。次の手順でデバイスを有効化した時に、対象のプロセスが分からなくならないよう、起動済み WUDFHost.exe の PIDをメモしておくと、後の手順でプロセスを特定しやすくなります。</p></blockquote></li></ol><br>  <ol start="5"><li><p>ターゲット PC に移動し、デバイス マネージャーでデバイスを有効化します。</p></li><li><p>開発環境の PC に戻り <strong>[プロセスにアタッチ]</strong> ダイアログ ボックスに参照すると、新たに <code>WUDFHost.exe</code> が増えていることが確認できるため、そのプロセスを選択して、**[アタッチする]** をクリックします。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/attach_newwudfhost.png" width="50%" align="left" border="1"><br clear="left">  </p></li><li><p><code>DebugBreak</code> のコードにヒットして、自動でデバッガーにブレークインします。F5 キーを押下して、そのまま実行を継続すると、手順 3 でドライバーの <code>DriverEntry</code> に設定しておいたブレークポイントにヒットして実行が停止します。そして、ステップ実行などによるデバッグ作業が行えるようになります。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/stop_driverentry.png" width="50%" align="left" border="1"><br clear="left"></p></li></ol><br>  <h3 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h3><p>手順にまとめると複雑な作業に見えますが、一連の操作に慣れてしまえば、簡単な操作でデバッグ作業を行うことができます。<br>デバッガーを接続して、コードの実行状況を正しく把握することで、推測ベースのトライ &amp; エラーによる問題解決よりも、確実な調査を行えます。リモートによるデバッガー接続を行うメリットの一つとして、ターゲット PC 上でストレステストやランダムなテストを実行する長時間の試験においても、開発環境側には大きな影響を受けないという利点があります。<br>さらに、Visual Studio を使ってプロセスにアタッチすることで、Visual Studio の <a href="https://learn.microsoft.com/ja-jp/visualstudio/profiling/profiling-feature-tour?view=vs-2022&pivots=programming-language-cpp#measure-performance-while-debugging">診断ツール</a> も利用することができます。診断ツールでは、CPU、メモリの使用状況を視覚的に確認でき、メモリリークの調査も行うことができます。  </p><br>    <br>    <hr><p><code>変更履歴</code><br><code>2025/10/01 created by riwaida</code></p><p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>]]></content>
+        <content type="html"><![CDATA[<p>この記事では Print Support App の仮想プリンターで発生する問題について説明します。</p><span id="more"></span><br><hr><h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>アプリから Print Support App (PSA) で作成された仮想プリンターに対して印刷を行った際、仮想プリンターの <a href="https://learn.microsoft.com/en-us/uwp/api/windows.graphics.printing.workflow.printworkflowvirtualprintersession.virtualprinterdataavailable?view=winrt-26100">PrintWorkflowVirtualPrinterSession.VirtualPrinterDataAvailable</a> で <a href="https://learn.microsoft.com/en-us/uwp/api/windows.graphics.printing.workflow.printworkflowuilauncher.launchandcompleteuiasync?view=winrt-26100">LaunchAndCompleteUIAsync</a> を呼び出してプリント ワークフロー Job UI を表示した際に、表示された Job UI のウィンドウが、印刷を行ったアプリの背後に隠れてしまう現象が発生します。<br>この現象は、印刷を行ったアプリが 32-bit アプリケーションだった場合に発生します。64-bit OS 上の 64-bit アプリの場合は、発生しません。<br><br><br><br></p><hr><h3 id="現象"><a href="#現象" class="headerlink" title="現象"></a>現象</h3><p>問題の現象が発生する手順は次の通りです。</p><ol><li>32-bit アプリケーションを起動します。(例：%WINDIR%\SysWOW64\msinfo32.exe など)</li><li>仮想プリンターに対して印刷を行います。</li><li>仮想プリンターのワークフロー Job UI ウィンドウが開きます。</li><li>次の青く囲った部分のように、PSA のウィンドウが印刷を行ったアプリ ウィンドウの背後に隠れてしまうことがあります。<br><img src="https://jpwdkblog.github.io/images/virtualprinter-z-order-issue/repro.png" align="left" border="1"><br clear="left"><br><br></li></ol><hr><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>フォアグラウンド ウィンドウを設定できるプロセスは、システムによって制限されています。制限を解除するためには、AllowSetForegroundWindow 関数などを用いて事前に設定が必要となります。<br>印刷を行うアプリと、ワークフロー Job UI を表示するプログラムは、別プロセスでありこれらの制限を解除する必要がありますが、現状では、特定の条件下においてこの制限を正しく解除できていないため、ワークフロー Job UI が前面に表示されない問題が発生しています。<br><br><br><br></p><hr><h3 id="回避方法"><a href="#回避方法" class="headerlink" title="回避方法"></a>回避方法</h3><p>この問題に対して PSA 側での実装では、有効な回避方法がありません。<br>そのため、本現象が発生した場合は、アプリの背面に表示されたウィンドウをクリックして、前面に表示して操作を行ってください。あるいは、タスクバーでハイライトされているアイコンをクリックして、ワークフロー Job UI の操作を行ってください。<br><img src="https://jpwdkblog.github.io/images/virtualprinter-z-order-issue/taskbar.png" align="left" border="1"><br clear="left"><br><br><br><br></p><hr><h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>この現象についてはマイクロソフトの不具合として認識しており開発部門へ報告済みとなりますが、現時点では修正の予定が決まっておりません。</p><!--OS Bug ID 60581804--><hr><p><code>変更履歴</code><br><code>2026/01/09 created by riwaida</code>  </p>]]></content>
       
       
       <categories>
           
-          <category> Debug </category>
+          <category> printscan </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Debug </tag>
-            
-            <tag> UMDF </tag>
-            
-            <tag> Visual Studio </tag>
+            <tag> printer </tag>
             
         </tags>
       
@@ -49,13 +45,42 @@
       
         <tags>
             
-            <tag> Windows 11 24H2 </tag>
-            
             <tag> bug </tag>
             
             <tag> WIA </tag>
             
             <tag> install </tag>
+            
+            <tag> Windows 11 24H2 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 3 - ドライバーロード時のデバッガー アタッチ)</title>
+      <link href="/blog/2025/10/02/umdf_remote_debug_part3/"/>
+      <url>/blog/2025/10/02/umdf_remote_debug_part3/</url>
+      
+        <content type="html"><![CDATA[<p>この記事では、Visual Studio と Remote Tools for Visual Studio を使用した User Mode Driver のリモート デバッグ方法について説明します。</p><span id="more"></span><br><hr><h3 id="事前準備"><a href="#事前準備" class="headerlink" title="事前準備"></a>事前準備</h3><p>以下のパート 1, 2 が完了していること。<br>  <a href="https://jpwdkblog.github.io/blog/2025/09/30/umdf_remote_debug_part1/">Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 1 - ドライバーのビルドとインストール)</a><br>  <a href="https://jpwdkblog.github.io/blog/2025/10/01/umdf_remote_debug_part2/">Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 2 - デバッガーの接続とデバッグ)</a>  </p><br>  <h3 id="ドライバーの初期化からデバッグを開始する"><a href="#ドライバーの初期化からデバッグを開始する" class="headerlink" title="ドライバーの初期化からデバッグを開始する"></a>ドライバーの初期化からデバッグを開始する</h3><p>パート 1 と 2 では、既にロードされているドライバーのホスト プロセス (WUDFHost.exe) に対してデバッガーをアタッチしました。<br>しかしこの方法では、ドライバーの初期化処理である <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/ddi/wdm/nc-wdm-driver_initialize"><code>DriverEntry</code></a> や <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"><code>EvtDriverDeviceAdd</code></a> コールバック ルーチン内の処理中にデバッガーをアタッチすることができず、デバッグを行うことができません。次の手順では、この問題を解決するための設定とリモート デバッグを開始する方法を説明します。  </p><ol><li>ターゲット PC 上で、レジストリ エディタ (regedit.exe) を起動します。起動後、次のレジストリを設定します。  <table><thead><tr><th><strong>レジストリ キー</strong></th><th><strong>値の型</strong></th><th><strong>値の名前</strong></th><th><strong>値</strong></th></tr></thead><tbody><tr><td>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WUDF\DebugMode</td><td>REG_DWORD</td><td>DebugModeFlags</td><td>0x07 (16進)</td></tr><tr><td>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WUDF\Services\{<em>ドライバー サービス名</em>}\Parameters\Wdf</td><td>REG_DWORD</td><td>HostProcessDbgBreakOnDriverLoad</td><td>120 (秒)</td></tr></tbody></table>[<code>DebugModeFlags</code>(<a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#debugmodeflags">https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#debugmodeflags</a>) はデバッグ モードを有効化し、デバイス プールの機能を無効化します。さらに再起動までのタイムアウトを無効化します。<br><a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/registry-values-for-debugging-kmdf-drivers#hostprocessdbgbreakondriverload-driver-specific"><code>HostProcessDbgBreakOnDriverLoad</code></a> は、デバッガーがアタッチされるまでの待機時間を秒単位で指定します。レジストリ キーにある <em>ドライバー サービス名</em> は、INF ファイルの <a href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/wdf/specifying-wdf-directives-in-inf-files#umdfservice"><code>UmdfService</code></a> ディレクティブに指定した <em>serviceName</em> です。<br>&lt;Toaster UMDF ドライバーの例&gt;<br>この例では <code>wdfsimpleum</code> が <em>serviceName</em> となります。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">;-------------- WDF specific section -------------</span><br><span class="line">[Toaster_Device.NT.Wdf]</span><br><span class="line">UmdfService=wdfsimpleum, Toaster_Install</span><br><span class="line">UmdfServiceOrder=wdfsimpleum</span><br></pre></td></tr></table></figure></li></ol>  <br>     <ol start="2"><li><p>ターゲット PC 上でデバイス マネージャーを起動して、対象のデバイスを一度無効化し、ドライバーをアンロードされた状態にします。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/devmgr_disable.png" align="left" border="1"><br clear="left">    </p><br>     </li><li><p>開発環境の PC の Visual Studio で <code>DriverEntry</code> 関数と <code>ToasterEvtDeviceAdd</code> 関数にブレークポイントをセットしておきます。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/setbp_driverentry.png" width="50%" align="left" border="1"><br clear="left">  </p><br>   </li><li><p>開発環境の PC の Visual Studio で <strong>[デバッグ]</strong> &gt; <strong>[プロセスにアタッチ]</strong> を選択し (または Ctrl+Alt+P キーを押し)、**[プロセスにアタッチ]** ダイアログ ボックスを開きます。**[接続の種類]** を <strong>[リモート (Windows - 認証なし)]</strong> の設定が維持されていることを確認し、フィルターのボックスに <em>WUDFHost.exe</em> と入力します。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/attach_wudfhost.png" width="50%" align="left" border="1"><br clear="left">  </p><blockquote><p>[!NOTE]<br>上の画像のように、既に起動している WUDFHost.exe が表示される場合もありますが、これはデバッグ対象のドライバー用プロセスではないため、アタッチしないでください。次の手順でデバイスを有効化した時に、対象のプロセスが分からなくならないよう、起動済み WUDFHost.exe の PIDをメモしておくと、後の手順でプロセスを特定しやすくなります。</p></blockquote></li></ol><br>  <ol start="5"><li><p>ターゲット PC に移動し、デバイス マネージャーでデバイスを有効化します。</p></li><li><p>開発環境の PC に戻り <strong>[プロセスにアタッチ]</strong> ダイアログ ボックスに参照すると、新たに <code>WUDFHost.exe</code> が増えていることが確認できるため、そのプロセスを選択して、**[アタッチする]** をクリックします。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/attach_newwudfhost.png" width="50%" align="left" border="1"><br clear="left">  </p></li><li><p><code>DebugBreak</code> のコードにヒットして、自動でデバッガーにブレークインします。F5 キーを押下して、そのまま実行を継続すると、手順 3 でドライバーの <code>DriverEntry</code> に設定しておいたブレークポイントにヒットして実行が停止します。そして、ステップ実行などによるデバッグ作業が行えるようになります。<br><img src="https://jpwdkblog.github.io/images/umdfremodedbg/stop_driverentry.png" width="50%" align="left" border="1"><br clear="left"></p></li></ol><br>  <h3 id="まとめ"><a href="#まとめ" class="headerlink" title="まとめ"></a>まとめ</h3><p>手順にまとめると複雑な作業に見えますが、一連の操作に慣れてしまえば、簡単な操作でデバッグ作業を行うことができます。<br>デバッガーを接続して、コードの実行状況を正しく把握することで、推測ベースのトライ &amp; エラーによる問題解決よりも、確実な調査を行えます。リモートによるデバッガー接続を行うメリットの一つとして、ターゲット PC 上でストレステストやランダムなテストを実行する長時間の試験においても、開発環境側には大きな影響を受けないという利点があります。<br>さらに、Visual Studio を使ってプロセスにアタッチすることで、Visual Studio の <a href="https://learn.microsoft.com/ja-jp/visualstudio/profiling/profiling-feature-tour?view=vs-2022&pivots=programming-language-cpp#measure-performance-while-debugging">診断ツール</a> も利用することができます。診断ツールでは、CPU、メモリの使用状況を視覚的に確認でき、メモリリークの調査も行うことができます。  </p><br>    <br>    <hr><p><code>変更履歴</code><br><code>2025/10/01 created by riwaida</code></p><p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Debug </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Debug </tag>
+            
+            <tag> UMDF </tag>
+            
+            <tag> Visual Studio </tag>
             
         </tags>
       
@@ -163,9 +188,9 @@
       
         <tags>
             
-            <tag> print </tag>
-            
             <tag> Windows 11 24H2 </tag>
+            
+            <tag> print </tag>
             
             <tag> Windows Server 2025 </tag>
             
@@ -205,7 +230,7 @@
       <link href="/blog/2024/08/15/psa-z-order-issue/"/>
       <url>/blog/2024/08/15/psa-z-order-issue/</url>
       
-        <content type="html"><![CDATA[<p>この記事では Print Support App で発生する問題について説明します。</p><span id="more"></span><br><hr><h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Print Support App (PSA) がインストールされた直後などにおいて、[設定] から起動時ウィンドウが設定画面の背後に隠れてしまう事象が発生します。<br>PSA が起動する際、つぎのダイアログが表示されるケースで事象が発生します。<br><img src="https://jpwdkblog.github.io/images/psa-z-order/wait-for-printer-connection.png" align="left" border="1"><br clear="left"><br><br><br><br></p><hr><h3 id="現象"><a href="#現象" class="headerlink" title="現象"></a>現象</h3><p>問題の事象が発生する手順は次の通りです。</p><ol><li>スタート メニューから [設定] をクリックします。</li><li>[Bluetooth とデバイス] - [プリンターとスキャナー] の順にクリックします。</li><li>表示されたプリンターの一覧から PSA を起動するプリンターをクリックします。</li><li>[印刷設定] をクリックします。<br><img src="https://jpwdkblog.github.io/images/psa-z-order/open-print-pref.png" align="left" border="1"><br clear="left"></li><li>次の青く囲った部分のように、PSA のウィンドウが設定画面の背後に隠れてしまうことがあります。<br><img src="https://jpwdkblog.github.io/images/psa-z-order/psa-window-back.png" align="left" border="1" width="50%" height="50%"><br clear="left"><br><br></li></ol><hr><h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>この現象については開発部門にて今後の対応を (次期メジャー OS アップデートでの対応について) 検討中となります。</p><hr><p><code>変更履歴</code><br><code>2024/08/15 created by riwaida</code><br><code>2025/07/10 modified by riwaida : 状況の更新</code>  </p>]]></content>
+        <content type="html"><![CDATA[<p>この記事では Print Support App で発生する問題について説明します。</p><span id="more"></span><br><hr><h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>Print Support App (PSA) がインストールされた直後などにおいて、[設定] から起動時ウィンドウが設定画面の背後に隠れてしまう事象が発生します。<br>PSA が起動する際、つぎのダイアログが表示されるケースで事象が発生します。<br><img src="https://jpwdkblog.github.io/images/psa-z-order/wait-for-printer-connection.png" align="left" border="1"><br clear="left"><br><br><br><br></p><hr><h3 id="現象"><a href="#現象" class="headerlink" title="現象"></a>現象</h3><p>問題の事象が発生する手順は次の通りです。</p><ol><li>スタート メニューから [設定] をクリックします。</li><li>[Bluetooth とデバイス] - [プリンターとスキャナー] の順にクリックします。</li><li>表示されたプリンターの一覧から PSA を起動するプリンターをクリックします。</li><li>[印刷設定] をクリックします。<br><img src="https://jpwdkblog.github.io/images/psa-z-order/open-print-pref.png" align="left" border="1"><br clear="left"></li><li>次の青く囲った部分のように、PSA のウィンドウが設定画面の背後に隠れてしまうことがあります。<br><img src="https://jpwdkblog.github.io/images/psa-z-order/psa-window-back.png" align="left" border="1" width="50%" height="50%"><br clear="left"><br><br></li></ol><hr><h3 id="状況"><a href="#状況" class="headerlink" title="状況"></a>状況</h3><p>この現象については開発部門にて今後の対応を (次期メジャー OS アップデートでの対応について) 検討中となります。</p><p>2026 年 1 月 9 日更新<br>Windows 11 25H2 ではこの問題の解消が確認されております。</p><!--OS Bug ID 51218384 --><hr><p><code>変更履歴</code><br><code>2024/08/15 created by riwaida</code><br><code>2025/07/10 modified by riwaida : 状況の更新</code><br><code>2026/01/09 modified by riwaida : 状況の更新</code>  </p>]]></content>
       
       
       <categories>
