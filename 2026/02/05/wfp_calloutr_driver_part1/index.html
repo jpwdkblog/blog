@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>第1回：WFP を理解する ― カーネルコールアウトドライバー実装の土台 | Japan WDK Support Blog</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="https://jpwdkblog.github.io/blog/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://jpwdkblog.github.io/blog/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://jpwdkblog.github.io/blog/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://jpwdkblog.github.io/blog/favicon/favicon-16x16.png">
+  <link rel="manifest" href="https://jpwdkblog.github.io/blog/favicon/site.webmanifest">
+  <link rel="mask-icon" href="https://jpwdkblog.github.io/blog/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="alternate" href="/blog/atom.xml" title="Japan WDK Support Blog" type="application/atom+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="この記事では、Windows Filtering Platform (WFP) のカーネルコールアウトドライバー実装に初めて取り組む開発者向けに、理解すべき土台と構造を “迷わず” 把握できるよう整理します。単なる API 羅列ではなく、なぜその設計が必要なのか／実装者はどの位置に立つのかをクリアにすることを目的としています。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第1回：WFP を理解する ― カーネルコールアウトドライバー実装の土台">
+<meta property="og:url" content="https://jpwdkblog.github.io/blog/2026/02/05/wfp_calloutr_driver_part1/index.html">
+<meta property="og:site_name" content="Japan WDK Support Blog">
+<meta property="og:description" content="この記事では、Windows Filtering Platform (WFP) のカーネルコールアウトドライバー実装に初めて取り組む開発者向けに、理解すべき土台と構造を “迷わず” 把握できるよう整理します。単なる API 羅列ではなく、なぜその設計が必要なのか／実装者はどの位置に立つのかをクリアにすることを目的としています。">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2026-02-04T15:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-05T09:21:50.232Z">
+<meta property="article:author" content="jpwdkblog">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="WFP">
+<meta name="twitter:card" content="summary">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  
+<link rel="stylesheet" href="/blog/style.css">
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+  <meta name="google-site-verification" content="pWQqMJ7gh1mrMlGHKKrGh0r1IqaWrJc1dWnZowSZW-c" />
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/blog/' >
+				Japan WDK Support Blog
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/blog/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/blog/archives'>
+								Archives
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search flat-box"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu flat-box"></span></a></li>
+			</ul>
+		</div>
+		
+		<div class='nav-sub container container--flex'>
+			<a class="logo" class="flat-box" href='javascript:void(0)'>
+				Word of Forks
+			</a>
+
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a href='javascript:void(0)'><span class="icon icon-chat_bubble_outline flat-box"></span></a></li>
+				<li class='s-top'><a href='javascript:void(0)'><span class="icon icon-arrow_upward flat-box"></span></a></li>
+				<li class='s-toc'><a href='javascript:void(0)'><span class="icon icon-format_list_numbered flat-box"></span></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+<aside class="menu-phone">
+	<nav>
+		
+			<a href="/blog/" class="nav-home nav">
+				Home
+			</a>
+		
+			<a href="/blog/archives" class="nav-archives nav">
+				Archives
+			</a>
+		
+	</nav>
+</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container clearfix'>
+      <div class='l_main'>
+        <article id="post-wfp_calloutr_driver_part1"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/blog/2026/02/05/wfp_calloutr_driver_part1/">
+    	第1回：WFP を理解する ― カーネルコールアウトドライバー実装の土台
+    </a>
+  </h2>
+	<time>
+	  2月 5, 2026
+	</time>
+	
+    
+    <div class='cats'>
+        <a href="/blog/categories/Development/">Development</a>
+    </div>
+
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-WFP-%E3%81%AF%E4%BD%95%E3%82%92%E6%8F%90%E4%BE%9B%E3%81%99%E3%82%8B%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AA%E3%81%AE%E3%81%8B"><span class="toc-number">1.</span> <span class="toc-text">1. WFP は何を提供する仕組みなのか</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-WFP-%E3%81%AE%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3%E3%82%92-%E2%80%9C%E4%BD%8D%E7%BD%AE%E9%96%A2%E4%BF%82%E2%80%9D-%E3%81%A7%E7%90%86%E8%A7%A3%E3%81%99%E3%82%8B"><span class="toc-number">2.</span> <span class="toc-text">2. WFP のアーキテクチャを “位置関係” で理解する</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-FWPM%EF%BC%88%E7%AE%A1%E7%90%86%EF%BC%89%E3%81%A8-FWPS%EF%BC%88%E5%AE%9F%E8%A1%8C%EF%BC%89%E3%81%AE%E9%81%95%E3%81%84%E3%82%92%E6%9C%80%E5%88%9D%E3%81%AB%E6%8A%BC%E3%81%95%E3%81%88%E3%82%8B"><span class="toc-number">3.</span> <span class="toc-text">3. FWPM（管理）と FWPS（実行）の違いを最初に押さえる</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fwpm%EF%BC%88%E7%AE%A1%E7%90%86%E3%83%97%E3%83%AC%E3%83%BC%E3%83%B3%EF%BC%9A%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">Fwpm（管理プレーン：ユーザーモード）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B9%E5%89%B2"><span class="toc-number">3.1.1.</span> <span class="toc-text">役割</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E8%A1%A8%E7%9A%84%E3%81%AA%E9%96%A2%E6%95%B0%E4%B8%80%E8%A6%A7"><span class="toc-number">3.1.2.</span> <span class="toc-text">代表的な関数一覧</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fwps%EF%BC%88%E5%AE%9F%E8%A1%8C%E3%83%97%E3%83%AC%E3%83%BC%E3%83%B3%EF%BC%9A%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%83%A2%E3%83%BC%E3%83%89%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">Fwps（実行プレーン：カーネルモード）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B9%E5%89%B2-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">役割</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E8%A1%A8%E7%9A%84%E3%81%AA%E9%96%A2%E6%95%B0%E4%B8%80%E8%A6%A7-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">代表的な関数一覧</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Callout-Driver-%E3%81%AE%E6%A7%8B%E9%80%A0%EF%BC%88%E6%9C%80%E5%B0%8F%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">4. Callout Driver の構造（最小イメージ）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E3%82%B3%E3%83%BC%E3%83%AB%E3%82%A2%E3%82%A6%E3%83%88%E5%87%A6%E7%90%86%E3%81%AE%E9%81%B8%E6%8A%9E"><span class="toc-number">5.</span> <span class="toc-text">5. コールアウト処理の選択</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC%E8%A8%AD%E5%AE%9A%E3%81%AE-%E2%80%9C%E8%90%BD%E3%81%A8%E3%81%97%E7%A9%B4%E2%80%9D-%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"><span class="toc-number">6.</span> <span class="toc-text">6. フィルター設定の “落とし穴” について</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E3%81%BE%E3%81%A8%E3%82%81"><span class="toc-number">6.1.</span> <span class="toc-text">7. まとめ</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%94-%E4%BB%8A%E5%9B%9E%E3%81%AE%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88"><span class="toc-number">6.1.1.</span> <span class="toc-text">✔ 今回のポイント</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AC%A1%E5%9B%9E%EF%BC%88%E7%AC%AC2%E5%9B%9E%EF%BC%89%E4%BA%88%E5%91%8A"><span class="toc-number">6.1.2.</span> <span class="toc-text">次回（第2回）予告</span></a></li></ol></li></ol></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>この記事では、Windows Filtering Platform (WFP) のカーネルコールアウトドライバー実装に初めて取り組む開発者向けに、理解すべき土台と構造を “迷わず” 把握できるよう整理します。単なる API 羅列ではなく、なぜその設計が必要なのか／実装者はどの位置に立つのかをクリアにすることを目的としています。</p>
+<span id="more"></span>
+<br>
+
+<hr>
+<h2 id="1-WFP-は何を提供する仕組みなのか"><a href="#1-WFP-は何を提供する仕組みなのか" class="headerlink" title="1. WFP は何を提供する仕組みなのか"></a>1. WFP は何を提供する仕組みなのか</h2><p>WFP は Windows ネットワークスタックに対する 統一的なフィルタリング基盤です。旧来の <a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/previous-versions/windows/hardware/network/ff565094(v=vs.85)">TDI</a> や <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/winsock/layered-protocols-and-protocol-chains-2">LSP</a>、<a target="_blank" rel="noopener" href="https://learn.microsoft.com/ja-jp/windows-hardware/drivers/network/introduction-to-ndis-filter-drivers">NDIS フィルター ドライバー</a>といった複数のレイヤーで分断された仕組みを置き換え、以下を単一の機能で扱えるようにしています。   </p>
+<ul>
+<li>パケット単位／ストリーム単位での検査・変更  </li>
+<li>IPv4 &#x2F; IPv6 双方のサポート  </li>
+<li>アプリケーション単位、ユーザー単位、コネクション単位でのポリシー制御  </li>
+<li>IPsec、RPC を含む幅広いレイヤーでの分類</li>
+</ul>
+<p>特に開発者にとって重要なのは、カーネルでの高速分類とコールアウトによる拡張が可能な点です。コールアウトドライバーは、特定レイヤーで到達したネットワーク データに対し、カスタム処理（深い検査、変更、再注入など）を行うことができます。   </p>
+<blockquote>
+<p>WFP のコールアウトはフックに近い処理となります。NDIS フィルター ドライバーの場合、プロトコル スタック - NDIS ミニポート ドライバー間のパケットの通過経路（データパス）へインライン処理として追加されるのに対して、WFP のコールアウトは、WFP の場合はパケットの分類処理に割り込んで処理が行われるというイメージです。  </p>
+</blockquote>
+<br>  
+<br>  
+  
+<h2 id="2-WFP-のアーキテクチャを-“位置関係”-で理解する"><a href="#2-WFP-のアーキテクチャを-“位置関係”-で理解する" class="headerlink" title="2. WFP のアーキテクチャを “位置関係” で理解する"></a>2. WFP のアーキテクチャを “位置関係” で理解する</h2><p>WFP の中心には BFE (Base Filtering Engine) があり、ユーザーモードとカーネルモード双方に分類エンジンを持ちます。</p>
+<ul>
+<li>ユーザーモード フィルター エンジン：RPC、IPsec などを担当（約10レイヤー）  </li>
+<li>カーネルモード フィルター エンジン：TCP&#x2F;IP スタックのネットワーク／トランスポート層（約50レイヤー）<br>👉 各レイヤーの一覧はこちら <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/fwp/management-filtering-layer-identifiers-">Filtering Layer Identifiers &#x2F; Fwpmu.h</a><br></li>
+</ul>
+<p>フィルタリングはこのエンジン上で行われ、以下の構成要素から成り立ちます。</p>
+<ul>
+<li>Filter（フィルター）<br>条件とアクション（許可・拒否・コールアウト呼び出しなど）を定義したルール。複数条件を持つ複合フィルターも作成できます。※フィルターはドライバー ソフトウェアを指しているのではなく、挙動を決定する定義です。</li>
+<li>Sublayer（サブレイヤー）<br>フィルター同士の競合を整理し、優先順位（ウェイト）を設定するための論理的なレイヤー。コールアウト ドライバーは自身のサブレイヤーを持つのが一般的です。</li>
+<li>Callout（コールアウト）<br>分類処理の中で呼び出される “拡張ポイント”。コールアウト ドライバーは以下のような用途を実現します。<br>開発者にとってコールアウトはネットワーク スタックにフックを追加する最小単位であり、分類のたびに classifyFn が実行されます。<ul>
+<li>深いパケット検査（Deep Inspection）  </li>
+<li>パケット／ストリームデータの変更と再注入  </li>
+<li>データのログ収集</li>
+</ul>
+</li>
+</ul>
+<br>  
+<br>  
+  
+<h2 id="3-FWPM（管理）と-FWPS（実行）の違いを最初に押さえる"><a href="#3-FWPM（管理）と-FWPS（実行）の違いを最初に押さえる" class="headerlink" title="3. FWPM（管理）と FWPS（実行）の違いを最初に押さえる"></a>3. FWPM（管理）と FWPS（実行）の違いを最初に押さえる</h2><p>WFP では 管理プレーン（FWPM） と 実行プレーン（FWPS） の API が明確に分離されています。以下は、具体的な API 例です。</p>
+<h3 id="Fwpm（管理プレーン：ユーザーモード）"><a href="#Fwpm（管理プレーン：ユーザーモード）" class="headerlink" title="Fwpm（管理プレーン：ユーザーモード）"></a><em>Fwpm</em>（管理プレーン：ユーザーモード）</h3><p>ユーザーモードサービスが 「WFP の設定を登録する側」 を担当します。  </p>
+<h4 id="役割"><a href="#役割" class="headerlink" title="役割"></a>役割</h4><ul>
+<li>エンジンのオープン、サブレイヤー追加、フィルター追加の削除 </li>
+<li>トランザクション（Begin &#x2F; Commit &#x2F; Abort）</li>
+</ul>
+<h4 id="代表的な関数一覧"><a href="#代表的な関数一覧" class="headerlink" title="代表的な関数一覧"></a>代表的な関数一覧</h4><table>
+<thead>
+<tr>
+<th>関数名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>FwpmEngineOpen0</code></td>
+<td>BFE（Base Filtering Engine）への接続を開く</td>
+</tr>
+<tr>
+<td><code>FwpmSubLayerAdd0</code></td>
+<td>独自サブレイヤーを登録する</td>
+</tr>
+<tr>
+<td><code>FwpmCalloutAdd0</code></td>
+<td>コールアウト定義を管理プレーンに追加する</td>
+</tr>
+<tr>
+<td><code>FwpmFilterAdd0</code></td>
+<td>フィルターを追加し WFP に適用する</td>
+</tr>
+<tr>
+<td><code>FwpmFilterDeleteById0</code></td>
+<td>フィルターを削除する</td>
+</tr>
+<tr>
+<td><code>FwpmTransactionBegin0</code>, <code>FwpmTransactionCommit0</code>, <code>FwpmTransactionAbort0</code></td>
+<td>フィルター操作のトランザクション制御</td>
+</tr>
+</tbody></table>
+<h3 id="Fwps（実行プレーン：カーネルモード）"><a href="#Fwps（実行プレーン：カーネルモード）" class="headerlink" title="Fwps（実行プレーン：カーネルモード）"></a><em>Fwps</em>（実行プレーン：カーネルモード）</h3><p>カーネルドライバー（コールアウトドライバー）が 「実際の分類処理に参加する側」 を担当します。  </p>
+<h4 id="役割-1"><a href="#役割-1" class="headerlink" title="役割"></a>役割</h4><ul>
+<li><em>classifyFn</em> によるパケット分類、<em>notifyFn</em> による通知の受け取り、<em>flowDeleteFn</em> でのデータフローの停止時の処理</li>
+<li>ストリーム／パケットのクローン・変更・再注入</li>
+<li>メタデータ参照</li>
+<li>コールアウト登録／解除</li>
+</ul>
+<h4 id="代表的な関数一覧-1"><a href="#代表的な関数一覧-1" class="headerlink" title="代表的な関数一覧"></a>代表的な関数一覧</h4><table>
+<thead>
+<tr>
+<th>関数名</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>FwpsCalloutRegister</code></td>
+<td><em>classifyFn</em> &#x2F; <em>notifyFn</em> &#x2F; <em>flowDeleteFn</em> を登録</td>
+</tr>
+<tr>
+<td><code>FwpsCalloutUnregisterByKey</code></td>
+<td>登録解除</td>
+</tr>
+<tr>
+<td><code>FwpsAllocateCloneNetBufferList0</code></td>
+<td>パケット（NBL）のクローン生成（修正・再注入に使用）</td>
+</tr>
+<tr>
+<td><code>FwpsCopyStreamDataToBuffer0</code></td>
+<td>ストリームデータを連続バッファへコピー</td>
+</tr>
+<tr>
+<td><code>FwpsInjectNetworkSendAsync0</code></td>
+<td>パケットを再注入する</td>
+</tr>
+<tr>
+<td><code>FwpsAcquireClassifyHandle0</code>, <code>FwpsReleaseClassifyHandle0</code></td>
+<td>分類メタデータにアクセスするためのハンドル取得／解放</td>
+</tr>
+</tbody></table>
+<p>まとめると、WFP の “設定” は FWPM、実際の “分類と処理” は FWPS と覚えておきます。</p>
+<br>  
+<br>  
+  
+<h2 id="4-Callout-Driver-の構造（最小イメージ）"><a href="#4-Callout-Driver-の構造（最小イメージ）" class="headerlink" title="4. Callout Driver の構造（最小イメージ）"></a>4. Callout Driver の構造（最小イメージ）</h2><p>カーネルコールアウトドライバーは、次のような実装を行います。ユーザーモード サービスによる管理を行うドライバーの場合は <code>Fwpm**</code> は通常は呼び出しません。</p>
+<ol>
+<li><code>DriverEntry</code> <ul>
+<li><code>FwpsCalloutRegister</code> によりコールアウトを登録</li>
+<li><code>FwpmCalloutAdd</code>／<code>FwpmFilterAdd</code> によるレイヤーの指定や、フィルター条件の設定（通常ユーザーモード サービス側で担当）</li>
+</ul>
+</li>
+<li><code>FWPS_CALLOUT</code>.<em>classifyFn</em><ul>
+<li>ネットワークデータ到達時に呼ばれるコア関数</li>
+<li>パケット (およびネットワーク ストリーム) のチェック、変更、必要に応じて一時的に処理を保留、ブロック等を実行</li>
+</ul>
+</li>
+<li><code>FWPS_CALLOUT</code>.<em>notifyFn</em><ul>
+<li>フィルターが追加されたり削除された時に通知を受信する関数。または BFE 状態が変化した際の通知を受け取る関数。</li>
+</ul>
+</li>
+<li>Packet&#x2F;Stream 操作の補助を関数 (ドライバー独自の関数)<br>次のような各種処理を行う各種関数を用意し、その関数から Fwps API を呼び出します。<ul>
+<li>パケットクローン、再注入</li>
+<li>ストリームデータのバッファコピー<br>例：<code>FwpsAllocateCloneNetBufferList0</code>、<code>FwpsCopyStreamDataToBuffer0</code> などを使用する処理</li>
+</ul>
+</li>
+<li>Unload 時のクリーンアップ<ul>
+<li><code>FwpsCalloutUnregisterBy**</code> で登録の解除  </li>
+<li>割り当てリソース解放</li>
+</ul>
+</li>
+</ol>
+<p>これらを KMDF &#x2F; WDM ドライバーいずれでも実装可能ですが、リソース管理の観点で KMDF での実装をお勧めします。</p>
+<br>  
+<br>  
+  
+<h2 id="5-コールアウト処理の選択"><a href="#5-コールアウト処理の選択" class="headerlink" title="5. コールアウト処理の選択"></a>5. コールアウト処理の選択</h2><p>WFP のコールアウトは大きく3分類に分けられます。</p>
+<ul>
+<li>Inline Inspection：トラフィックを変更せず観察だけを <em>classifyFn</em> 内で行う（action &#x3D; CONTINUE）</li>
+<li>Inline Modification：クローン → 加工 → パケットの再注入を <em>classifyFn</em> の中で実施</li>
+<li>Out-of-band Inspection：一旦データを保留して、<em>classifyFn</em> の外部（専用のスレッドや、WorkItem、DPC ルーチン）で処理して、パケットの再注入を行う<br>実装の難度と副作用の大きさは、Inline Inspection ＜ Inline Modification ＜ Out-of-band の順に上がります。まずは Inline Inspection で処理を理解し、その後、目的に応じてパケットの変更系に進むのが学習の流れとしては理解しやすいです。</li>
+</ul>
+<p>それぞれの用途と、特徴は次の通りです。  </p>
+<table>
+<thead>
+<tr>
+<th>種類</th>
+<th>向いている用途</th>
+<th>副作用の大きさ※</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Inline Inspection</td>
+<td>ログ、監査、軽い条件分岐</td>
+<td>小</td>
+</tr>
+<tr>
+<td>Inline Modification</td>
+<td>NAT &#x2F; ヘッダ書換</td>
+<td>中</td>
+</tr>
+<tr>
+<td>Out-of-band</td>
+<td>ストリーム単位の解析・DLP</td>
+<td>大</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>※ここでの副作用とは、ドライバーの実装・設計ミスにより、OS のネットワーク挙動に生じる悪影響（遅延・通信断・高負荷・デッドロックなど）を指しています。</p>
+</blockquote>
+<br>  
+<br>  
+
+<h2 id="6-フィルター設定の-“落とし穴”-について"><a href="#6-フィルター設定の-“落とし穴”-について" class="headerlink" title="6. フィルター設定の “落とし穴” について"></a>6. フィルター設定の “落とし穴” について</h2><p>初めにつまづきやすいポイントとしては、コールアウト側の実装ではなく フィルター側の設定ミスです。  </p>
+<ul>
+<li>フィルターの条件を詰め込み過ぎて分類遅延が発生</li>
+<li>Weight や Sublayer の整合が取れず、期待より前に別のフィルターが介入</li>
+<li>ALE (Application Layer Enforcement 層と Transport 層の理解不足により、期待しているレイヤーで <em>classifyFn</em> が呼ばれない<br>特に ALE レイヤー（接続確立前後の処理）は、WinSock の listen &#x2F; bind &#x2F; connect &#x2F; accept のどの部分に該当するのかを理解しておくのが重要です。<br>関連ドキュメント : <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/fwp/ale-layers">ALE Layers</a></li>
+</ul>
+<p>ALE は Winsock API と対になるよう設計されており、大まかな図で表すと次のようになります。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">// Client-side ALE Flow</span><br><span class="line">Application</span><br><span class="line">    |</span><br><span class="line">    | socket()</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_RESOURCE_ASSIGNMENT_V4/V6</span><br><span class="line">    |</span><br><span class="line">    | bind()</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_BIND_REDIRECT_V4/V6      (allows redirecting the socket’s local address/port for as long as the socket exists)</span><br><span class="line">    |</span><br><span class="line">    | connect()</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_CONNECT_REDIRECT_V4/V6   (allows modifying the remote address/port of an outbound connection)</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_AUTH_CONNECT_V4/V6       (first outbound SYN / first UDP send)</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">TCP 3-way handshake completes</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_FLOW_ESTABLISHED_V4/V6   (flow created; tracking only)</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">Data phase (send/recv)</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_ENDPOINT_CLOSURE_V4/V6   (FIN/RST / socket close)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Server-side ALE Flow</span><br><span class="line">Application</span><br><span class="line">    |</span><br><span class="line">    | socket()</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_RESOURCE_ASSIGNMENT_V4/V6</span><br><span class="line">    |</span><br><span class="line">    | bind()</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_BIND_REDIRECT_V4/V6      (allows redirecting the socket’s local address/port for as long as the socket exists)</span><br><span class="line">    |</span><br><span class="line">    | listen()</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_AUTH_LISTEN_V4/V6        (listen call)</span><br><span class="line">    |</span><br><span class="line"> client connects</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_AUTH_RECV_ACCEPT_V4/V6   (first inbound SYN / UDP first packet)</span><br><span class="line">    |</span><br><span class="line">TCP 3-way handshake completes</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_FLOW_ESTABLISHED_V4/V6   (after a TCP 3-way handshake has successfully completed)</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">Data phase (send/recv)</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">FWPM_LAYER_ALE_ENDPOINT_CLOSURE_V4/V6</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<br>  
+<br>  
+
+
+<h3 id="7-まとめ"><a href="#7-まとめ" class="headerlink" title="7. まとめ"></a>7. まとめ</h3><p>今回（第1回）では、WFP のコールアウト ドライバー実装に必要な基礎的な内容について整理しました。  </p>
+<h4 id="✔-今回のポイント"><a href="#✔-今回のポイント" class="headerlink" title="✔ 今回のポイント"></a>✔ 今回のポイント</h4><ul>
+<li>WFP の全体像（BFE &#x2F; ユーザーモード &#x2F; カーネルモード）</li>
+<li>FWPM（管理）と FWPS（実行）の違い</li>
+<li>コールアウト処理の種類と選び方</li>
+<li>ALE レイヤーの流れと注意点（connect &#x2F; bind &#x2F; accept の扱い）<br>WFP では分かりにくい点が多いですが、これらを押さえることでサンプルコードへの理解、実際にドライバーの作成・デバッグの役に立つものと思います。</li>
+</ul>
+<h4 id="次回（第2回）予告"><a href="#次回（第2回）予告" class="headerlink" title="次回（第2回）予告"></a>次回（第2回）予告</h4><p>第2回のテーマ（予定）：実装編 基礎から実用へ  </p>
+<ul>
+<li>コールアウトドライバーの最小コード（DriverEntry &#x2F; classifyFn）</li>
+<li>ユーザーモードサービスによるサブレイヤー・フィルター登録</li>
+<li>netsh wfp、Security ログ、ETW を使った動作確認</li>
+<li>Connect Redirect など、実案件でも役に立つシナリオ紹介</li>
+<li>開発環境セットアップ（WDK &#x2F; テストサイン &#x2F; カーネルデバッグ）<br>などを検討していますが、状況により変更となる可能性がありますことあらかじめご了承ください。</li>
+</ul>
+<br>  
+<br>  
+
+
+<hr>
+<p><code>変更履歴</code><br><code>2026/02/05 created by riwaida</code></p>
+<p>※ 本記事は 「<a href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/">jpwdkblog について</a>」 の留意事項に準じます。<br>※ 併せて 「<a href="https://jpwdkblog.github.io/blog/">ホームページ</a>」 および 「<a href="https://jpwdkblog.github.io/blog/archives/">記事一覧</a>」 もご参照いただければ幸いです。  </p>
+
+  	</div>
+	  
+	  <div class="article-tags tags">
+      
+        <a href="/blog/tags/Network/">Network</a>
+      
+        <a href="/blog/tags/WFP/">WFP</a>
+      
+	  </div>
+    
+		
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/blog/2026/01/09/virtualprinter-z-order-issue/" rel="next"  title="Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう">
+						Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+</article>
+<script>
+	window.subData = {
+		title: '第1回：WFP を理解する ― カーネルコールアウトドライバー実装の土台',
+		tools: true
+	}
+</script>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src="https://jpwdkblog.github.io/blog/favicon/mstile-150x150.png">
+<div class='content'>
+    <div class='desc'>
+        このサイトはマイクロソフトの Windows Driver Kit サポート チームによって運営されております。</br></br>
+        Powered by: 祝田、津田、ジェシー、中神、上原、カイル</br></br>
+        Web master: 望月
+    </div>
+</div>
+</section>
+
+  <section class='m_widget links'>
+<div class='header'>Links</div>
+<div class='content'>
+    <ul class="entry">
+    
+        <li><a class="flat-box" target="_blank" href="https://jpaiblog.github.io/blog/">
+            <div class='name'>Japan Cognitive Service Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpiotblog.github.io/blog/">
+            <div class='name'>Japan IoT Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpmlblog.github.io/blog/">
+            <div class='name'>Japan Machine Learning Support Blog</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://jpwdkblog.github.io/blog/">
+            <div class='name'>Japan WDK Support Blog</div>
+        </a></li>
+    
+    </ul>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/blog/categories/Debug/"><div class='name'>Debug</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Development/"><div class='name'>Development</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Hardware-Lab-Kit/"><div class='name'>Hardware Lab Kit</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Windows-Driver-Kit-%E5%85%A8%E8%88%AC/"><div class='name'>Windows Driver Kit 全般</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/Windows-PE/"><div class='name'>Windows PE</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/hlk/"><div class='name'>hlk</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/blog/categories/printscan/"><div class='name'>printscan</div><div class='badget'>9</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/blog/tags/CPrintDialog/" style="font-size: 14px; color: #808080">CPrintDialog</a> <a href="/blog/tags/Debug/" style="font-size: 20px; color: #000">Debug</a> <a href="/blog/tags/IOCTL/" style="font-size: 14px; color: #808080">IOCTL</a> <a href="/blog/tags/Network/" style="font-size: 14px; color: #808080">Network</a> <a href="/blog/tags/UMDF/" style="font-size: 20px; color: #000">UMDF</a> <a href="/blog/tags/Visual-Studio/" style="font-size: 20px; color: #000">Visual Studio</a> <a href="/blog/tags/WFP/" style="font-size: 14px; color: #808080">WFP</a> <a href="/blog/tags/WIA/" style="font-size: 14px; color: #808080">WIA</a> <a href="/blog/tags/Windows-10/" style="font-size: 14px; color: #808080">Windows 10</a> <a href="/blog/tags/Windows-11/" style="font-size: 14px; color: #808080">Windows 11</a> <a href="/blog/tags/Windows-11-24H2/" style="font-size: 17px; color: #404040">Windows 11 24H2</a> <a href="/blog/tags/Windows-11-HLK/" style="font-size: 14px; color: #808080">Windows 11 HLK</a> <a href="/blog/tags/Windows-Server-2025/" style="font-size: 14px; color: #808080">Windows Server 2025</a> <a href="/blog/tags/bug/" style="font-size: 14px; color: #808080">bug</a> <a href="/blog/tags/devmode/" style="font-size: 14px; color: #808080">devmode</a> <a href="/blog/tags/install/" style="font-size: 14px; color: #808080">install</a> <a href="/blog/tags/print/" style="font-size: 14px; color: #808080">print</a> <a href="/blog/tags/printer/" style="font-size: 20px; color: #000">printer</a> <a href="/blog/tags/test/" style="font-size: 14px; color: #808080">test</a> <a href="/blog/tags/%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB/" style="font-size: 14px; color: #808080">はじめに</a> <a href="/blog/tags/%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB-%E3%83%87%E3%83%90%E3%83%83%E3%82%B0/" style="font-size: 14px; color: #808080">カーネル デバッグ</a> <a href="/blog/tags/%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1/" style="font-size: 14px; color: #808080">参考情報</a> <a href="/blog/tags/%E9%81%8E%E5%8E%BB%E3%83%96%E3%83%AD%E3%82%B0/" style="font-size: 14px; color: #808080">過去ブログ</a>
+    </div>
+</div>
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/damochiz" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="/atom.xml" class="social rss"
+          target="_blank" rel="external">
+          <span class="icon icon-rss"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a target="_blank" rel="noopener" href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+
+<script src="/blog/js/jquery.fitvids.js"></script>
+
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/blog/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+
+<script src="/blog/js/search.js"></script>
+
+
+<script src="/blog/js/app.js"></script>
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

@@ -6,7 +6,7 @@
   <link href="https://jpwdkblog.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://jpwdkblog.github.io/blog/"/>
-  <updated>2026-01-09T04:28:45.441Z</updated>
+  <updated>2026-02-05T09:21:50.232Z</updated>
   <id>https://jpwdkblog.github.io/blog/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>第1回：WFP を理解する ― カーネルコールアウトドライバー実装の土台</title>
+    <link href="https://jpwdkblog.github.io/blog/2026/02/05/wfp_calloutr_driver_part1/"/>
+    <id>https://jpwdkblog.github.io/blog/2026/02/05/wfp_calloutr_driver_part1/</id>
+    <published>2026-02-04T15:00:00.000Z</published>
+    <updated>2026-02-05T09:21:50.232Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;この記事では、Windows Filtering Platform (WFP) のカーネルコールアウトドライバー実装に初めて取り組む開発者向けに、理解すべき土台と構造を “迷わず” 把握できるよう整理します。単なる API 羅列ではなく、なぜその設計が必要なのか／実装者はどの位置に立つのかをクリアにすることを目的としています。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Development" scheme="https://jpwdkblog.github.io/blog/categories/Development/"/>
+    
+    
+    <category term="Network" scheme="https://jpwdkblog.github.io/blog/tags/Network/"/>
+    
+    <category term="WFP" scheme="https://jpwdkblog.github.io/blog/tags/WFP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Print Support App (PSA) 仮想プリンターで、Job UI ウィンドウが印刷を行ったアプリの背面に表示されてしまう</title>
     <link href="https://jpwdkblog.github.io/blog/2026/01/09/virtualprinter-z-order-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2026/01/09/virtualprinter-z-order-issue/</id>
     <published>2026-01-08T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.441Z</updated>
+    <updated>2026-02-05T09:21:50.218Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では Print Support App の仮想プリンターで発生する問題について説明します。&lt;/p&gt;</summary>
@@ -36,36 +57,11 @@
   </entry>
   
   <entry>
-    <title>Windows 11 24H2 の WIA ドライバーのインストールにおいて ICM Profile が適用されない</title>
-    <link href="https://jpwdkblog.github.io/blog/2025/10/02/w11_24h2_icmprofile_issue/"/>
-    <id>https://jpwdkblog.github.io/blog/2025/10/02/w11_24h2_icmprofile_issue/</id>
-    <published>2025-10-01T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.450Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;この記事では、Windows 11 24H2 における WIA デバイス の INF ファイルに指定されているベンダー指定のカラー プロファイル (Image Color Matching Profile) が適用されない問題について説明します。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="printscan" scheme="https://jpwdkblog.github.io/blog/categories/printscan/"/>
-    
-    
-    <category term="bug" scheme="https://jpwdkblog.github.io/blog/tags/bug/"/>
-    
-    <category term="WIA" scheme="https://jpwdkblog.github.io/blog/tags/WIA/"/>
-    
-    <category term="install" scheme="https://jpwdkblog.github.io/blog/tags/install/"/>
-    
-    <category term="Windows 11 24H2" scheme="https://jpwdkblog.github.io/blog/tags/Windows-11-24H2/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 3 - ドライバーロード時のデバッガー アタッチ)</title>
     <link href="https://jpwdkblog.github.io/blog/2025/10/02/umdf_remote_debug_part3/"/>
     <id>https://jpwdkblog.github.io/blog/2025/10/02/umdf_remote_debug_part3/</id>
     <published>2025-10-01T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.434Z</updated>
+    <updated>2026-02-05T09:21:50.210Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Visual Studio と Remote Tools for Visual Studio を使用した User Mode Driver のリモート デバッグ方法について説明します。&lt;/p&gt;</summary>
@@ -84,11 +80,36 @@
   </entry>
   
   <entry>
+    <title>Windows 11 24H2 の WIA ドライバーのインストールにおいて ICM Profile が適用されない</title>
+    <link href="https://jpwdkblog.github.io/blog/2025/10/02/w11_24h2_icmprofile_issue/"/>
+    <id>https://jpwdkblog.github.io/blog/2025/10/02/w11_24h2_icmprofile_issue/</id>
+    <published>2025-10-01T15:00:00.000Z</published>
+    <updated>2026-02-05T09:21:50.225Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;この記事では、Windows 11 24H2 における WIA デバイス の INF ファイルに指定されているベンダー指定のカラー プロファイル (Image Color Matching Profile) が適用されない問題について説明します。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="printscan" scheme="https://jpwdkblog.github.io/blog/categories/printscan/"/>
+    
+    
+    <category term="Windows 11 24H2" scheme="https://jpwdkblog.github.io/blog/tags/Windows-11-24H2/"/>
+    
+    <category term="bug" scheme="https://jpwdkblog.github.io/blog/tags/bug/"/>
+    
+    <category term="WIA" scheme="https://jpwdkblog.github.io/blog/tags/WIA/"/>
+    
+    <category term="install" scheme="https://jpwdkblog.github.io/blog/tags/install/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Visual Studio で User Mode Driver をリモート デバッグする方法 (パート 2 - デバッガーの接続とデバッグ)</title>
     <link href="https://jpwdkblog.github.io/blog/2025/10/01/umdf_remote_debug_part2/"/>
     <id>https://jpwdkblog.github.io/blog/2025/10/01/umdf_remote_debug_part2/</id>
     <published>2025-09-30T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.409Z</updated>
+    <updated>2026-02-05T09:21:50.179Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Visual Studio と Remote Tools for Visual Studio を使用した User Mode Driver のリモート デバッグ方法について説明します。&lt;/p&gt;</summary>
@@ -111,7 +132,7 @@
     <link href="https://jpwdkblog.github.io/blog/2025/09/30/umdf_remote_debug_part1/"/>
     <id>https://jpwdkblog.github.io/blog/2025/09/30/umdf_remote_debug_part1/</id>
     <published>2025-09-29T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.382Z</updated>
+    <updated>2026-02-05T09:21:50.148Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Visual Studio と Remote Tools for Visual Studio を使用した User Mode Driver のリモート デバッグ方法について説明します。&lt;/p&gt;</summary>
@@ -134,7 +155,7 @@
     <link href="https://jpwdkblog.github.io/blog/2025/07/10/howto-troubleshoot-hlk-test-fail/"/>
     <id>https://jpwdkblog.github.io/blog/2025/07/10/howto-troubleshoot-hlk-test-fail/</id>
     <published>2025-07-09T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.249Z</updated>
+    <updated>2026-02-05T09:21:50.017Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Hardware Lab Kit (HLK) のテストで FAIL が発生した時の一般的なトラブルシューティング方法をご案内いたします。&lt;/p&gt;</summary>
@@ -153,7 +174,7 @@
     <link href="https://jpwdkblog.github.io/blog/2025/07/09/printing-causes-memory-leak/"/>
     <id>https://jpwdkblog.github.io/blog/2025/07/09/printing-causes-memory-leak/</id>
     <published>2025-07-09T08:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.359Z</updated>
+    <updated>2026-02-05T09:21:50.110Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Windows 11 24H2 および Windows Server 2025 上での印刷処理において発生するメモリリークについて説明します。&lt;/p&gt;</summary>
@@ -163,9 +184,9 @@
     <category term="printscan" scheme="https://jpwdkblog.github.io/blog/categories/printscan/"/>
     
     
-    <category term="Windows 11 24H2" scheme="https://jpwdkblog.github.io/blog/tags/Windows-11-24H2/"/>
-    
     <category term="print" scheme="https://jpwdkblog.github.io/blog/tags/print/"/>
+    
+    <category term="Windows 11 24H2" scheme="https://jpwdkblog.github.io/blog/tags/Windows-11-24H2/"/>
     
     <category term="Windows Server 2025" scheme="https://jpwdkblog.github.io/blog/tags/Windows-Server-2025/"/>
     
@@ -176,7 +197,7 @@
     <link href="https://jpwdkblog.github.io/blog/2024/08/23/psa-default-value-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2024/08/23/psa-default-value-issue/</id>
     <published>2024-08-22T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.367Z</updated>
+    <updated>2026-02-05T09:21:50.115Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では Print Support App で発生する問題について説明します。&lt;/p&gt;</summary>
@@ -195,7 +216,7 @@
     <link href="https://jpwdkblog.github.io/blog/2024/08/15/psa-z-order-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2024/08/15/psa-z-order-issue/</id>
     <published>2024-08-14T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.373Z</updated>
+    <updated>2026-02-05T09:21:50.121Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では Print Support App で発生する問題について説明します。&lt;/p&gt;</summary>
@@ -214,7 +235,7 @@
     <link href="https://jpwdkblog.github.io/blog/2023/06/05/printer-CPrintDialog-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2023/06/05/printer-CPrintDialog-issue/</id>
     <published>2023-06-04T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.315Z</updated>
+    <updated>2026-02-05T09:21:50.061Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事は、CPrintDialog を利用したアプリケーションから印刷した際に発生する問題について説明します。&lt;/p&gt;</summary>
@@ -233,7 +254,7 @@
     <link href="https://jpwdkblog.github.io/blog/2022/09/20/printer-devmode-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2022/09/20/printer-devmode-issue/</id>
     <published>2022-09-19T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.326Z</updated>
+    <updated>2026-02-05T09:21:50.071Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事は、プリンタードライバーのアップデートを行った際に発生する問題について説明します。&lt;/p&gt;</summary>
@@ -252,7 +273,7 @@
     <link href="https://jpwdkblog.github.io/blog/2022/03/10/printer-null-port-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2022/03/10/printer-null-port-issue/</id>
     <published>2022-03-10T08:30:00.000Z</published>
-    <updated>2026-01-09T04:28:45.351Z</updated>
+    <updated>2026-02-05T09:21:50.100Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Windows 10 における印刷における問題について説明します。&lt;/p&gt;</summary>
@@ -271,7 +292,7 @@
     <link href="https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/"/>
     <id>https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/</id>
     <published>2021-12-28T00:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.458Z</updated>
+    <updated>2026-02-05T09:21:50.269Z</updated>
     
     
     <summary type="html">&lt;p&gt;この記事では、Windows 11 に USB スキャナーを接続した問題について説明します。&lt;/p&gt;</summary>
@@ -290,7 +311,7 @@
     <link href="https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/"/>
     <id>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</id>
     <published>2021-07-12T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.240Z</updated>
+    <updated>2026-02-05T09:21:50.011Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows 11 及び Server 2022 用 HLK の Create project を実行する際の、”Is Windows Driver Project?” チェックボックスについて注意点を紹介いたします。  &lt;/p&gt;</summary>
@@ -309,7 +330,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/"/>
     <id>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</id>
     <published>2020-08-11T03:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.475Z</updated>
+    <updated>2026-02-05T09:21:50.300Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE で動作するドライバを開発していただくにあたり、ご参照いただける公開ドキュメントをこちらにまとめてご紹介をいたします。&lt;/p&gt;</summary>
@@ -328,7 +349,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</id>
     <published>2020-07-29T08:30:00.000Z</published>
-    <updated>2026-01-09T04:28:45.277Z</updated>
+    <updated>2026-02-05T09:21:50.026Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE で IOCTL サンプルを動作させる方法についてご紹介します。&lt;/p&gt;</summary>
@@ -347,7 +368,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/"/>
     <id>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</id>
     <published>2020-07-29T08:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.463Z</updated>
+    <updated>2026-02-05T09:21:50.286Z</updated>
     
     
     <summary type="html">&lt;p&gt;Windows PE でのネットワーク経由のカーネルデバッガ接続方法についてご紹介します。&lt;/p&gt;</summary>
@@ -366,7 +387,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/12/past-blog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</id>
     <published>2020-01-11T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.304Z</updated>
+    <updated>2026-02-05T09:21:50.052Z</updated>
     
     
     <summary type="html">&lt;p&gt;過去のブログ情報を紹介いたします。&lt;/p&gt;</summary>
@@ -385,7 +406,7 @@
     <link href="https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/"/>
     <id>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</id>
     <published>2019-12-31T15:00:00.000Z</published>
-    <updated>2026-01-09T04:28:45.215Z</updated>
+    <updated>2026-02-05T09:21:50.003Z</updated>
     
     
       
