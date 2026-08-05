@@ -4,10 +4,19 @@ var customSearch;
 
 	"use strict";
 	const scrollCorrection = 70; // (header height = 50px) + (gap = 20px)
+	// toc() percent-encodes the fragment while the heading id stays raw UTF-8, so decode before lookup.
+	function findByHash(hash) {
+		let id = String(hash || '').replace(/^#/, '');
+		try { id = decodeURIComponent(id); } catch (err) { /* malformed escape: fall back to the raw id */ }
+		const elem = id && document.getElementById(id);
+		return elem ? $(elem) : $();
+	}
 	function scrolltoElement(elem, correction) {
 		correction = correction || scrollCorrection;
-		const $elem = elem.href ? $(elem.getAttribute('href')) : $(elem);
-		$('html, body').animate({ 'scrollTop': $elem.offset().top - correction }, 400);
+		const $elem = elem.href ? findByHash(elem.getAttribute('href')) : $(elem);
+		const offset = $elem.offset();
+		if (!offset) return;
+		$('html, body').animate({ 'scrollTop': offset.top - correction }, 400);
 	};
 
 	function setHeader() {
@@ -138,12 +147,15 @@ var customSearch;
 		$toc.on('click', 'a', (e) => {
 			e.preventDefault();
 			e.stopPropagation();
-			scrolltoElement(e.target.tagName.toLowerCase === 'a' ? e.target : e.target.parentElement);
+			scrolltoElement(e.currentTarget);
 		});
 
 		const liElements = Array.from($toc.find('li a'));
 		//function animate above will convert float to int.
-		const getAnchor = () => liElements.map(elem => Math.floor($(elem.getAttribute('href')).offset().top - scrollCorrection));
+		const getAnchor = () => liElements.map(elem => {
+			const offset = findByHash(elem.getAttribute('href')).offset();
+			return offset ? Math.floor(offset.top - scrollCorrection) : 0;
+		});
 
 		let anchor = getAnchor();
 		const scrollListener = () => {
