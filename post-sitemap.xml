@@ -9,7 +9,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/08/11/winpe-reference-websites/</loc>
-        <lastmod>2026-08-05T02:46:41.835Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.408Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/07/29/winpe-kernel-debug-via-network/</loc>
-        <lastmod>2026-08-05T02:46:41.815Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.382Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,7 +25,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2021/12/28/win11-usbscan-issue/</loc>
-        <lastmod>2026-08-05T02:46:41.808Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.363Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -33,7 +33,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2026/04/02/wfp_calloutr_driver_part2/</loc>
-        <lastmod>2026-08-05T02:46:41.789Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.330Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -41,7 +41,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2026/02/05/wfp_calloutr_driver_part1/</loc>
-        <lastmod>2026-08-05T02:46:41.767Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.299Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -49,7 +49,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2025/10/02/w11_24h2_icmprofile_issue/</loc>
-        <lastmod>2026-08-05T02:46:41.741Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.269Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -57,7 +57,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2026/01/09/virtualprinter-z-order-issue/</loc>
-        <lastmod>2026-08-05T02:46:41.725Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.239Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -65,7 +65,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2025/10/02/umdf_remote_debug_part3/</loc>
-        <lastmod>2026-08-05T02:46:41.721Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.222Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -73,7 +73,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2025/10/01/umdf_remote_debug_part2/</loc>
-        <lastmod>2026-08-05T02:46:41.701Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.192Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -81,7 +81,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2025/09/30/umdf_remote_debug_part1/</loc>
-        <lastmod>2026-08-05T02:46:41.682Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.160Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -89,7 +89,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2024/08/15/psa-z-order-issue/</loc>
-        <lastmod>2026-08-05T02:46:41.663Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.141Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -97,7 +97,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2026/04/08/psa-virtualprinter-checklist/</loc>
-        <lastmod>2026-08-05T02:46:41.656Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.135Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -105,7 +105,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2024/08/23/psa-default-value-issue/</loc>
-        <lastmod>2026-08-05T02:46:41.641Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.112Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -113,7 +113,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2025/07/09/printing-causes-memory-leak/</loc>
-        <lastmod>2026-08-05T02:46:41.618Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.096Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -121,7 +121,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2022/03/10/printer-null-port-issue/</loc>
-        <lastmod>2026-08-05T02:46:41.612Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.090Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -129,7 +129,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2022/09/20/printer-devmode-issue/</loc>
-        <lastmod>2026-08-05T02:46:41.592Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.056Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -137,7 +137,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2023/06/05/printer-CPrintDialog-issue/</loc>
-        <lastmod>2026-08-05T02:46:41.587Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.012Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -145,7 +145,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/01/12/past-blog/</loc>
-        <lastmod>2026-08-05T02:46:41.583Z</lastmod>
+        <lastmod>2026-08-05T02:56:06.006Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -153,7 +153,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/07/29/IOCTL-sample/</loc>
-        <lastmod>2026-08-05T02:46:41.559Z</lastmod>
+        <lastmod>2026-08-05T02:56:05.991Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -161,7 +161,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2025/07/10/howto-troubleshoot-hlk-test-fail/</loc>
-        <lastmod>2026-08-05T02:46:41.540Z</lastmod>
+        <lastmod>2026-08-05T02:56:05.974Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -169,7 +169,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2021/07/13/HLK-create-project/</loc>
-        <lastmod>2026-08-05T02:46:41.535Z</lastmod>
+        <lastmod>2026-08-05T02:56:05.968Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -177,7 +177,7 @@
 
     <url>
         <loc>https://jpwdkblog.github.io/blog/2020/01/01/aobut-jpwdkblog/</loc>
-        <lastmod>2026-08-05T02:46:41.529Z</lastmod>
+        <lastmod>2026-08-05T02:56:05.951Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
